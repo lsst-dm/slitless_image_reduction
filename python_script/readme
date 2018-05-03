@@ -1,0 +1,6 @@
+### comment faire sa librairie :
+http://sametmax.com/creer-un-setup-py-et-mettre-sa-bibliotheque-python-en-ligne-sur-pypi/
+
+
+rm -rf local build; python setup.py build; python setup.py install --prefix=local
+
