@@ -1,5 +1,5 @@
 # slitless_image_reduction
-These scripts are used to reduced slitless images from CTIO 0.9-m telescope
+These scripts are used to reduce slitless images from the CTIO 0.9-m telescope.
 
 
 
