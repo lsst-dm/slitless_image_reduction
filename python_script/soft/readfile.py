@@ -54,7 +54,7 @@ if __name__ == "__main__":
             #print 'values : ', dict.values()
             #print 'keys : ', dict.keys()
             #print values.field('wg')
-            print('Dict : ', dict.items())
+            print('Dict : ', list(dict.items()))
             print('Array : ', values.field)
             pl.plot(values.field('wg'), values.field('tatmo'))
             pl.show()

@@ -9,6 +9,7 @@ aguyonnet@fas.harvard.edu
 from __future__ import print_function
 #from __future__ import division, print_function
 
+from builtins import str
 import os
 import sys
 import re
@@ -62,7 +63,7 @@ def copywcs(ref, target):
     header = w.to_header()
     hdulist2 = fits.open(target, mode='update')
     target_header = hdulist2[0].header
-    target_header.extend(header.items())
+    target_header.extend(list(header.items()))
     hdulist2.flush()
     return
 

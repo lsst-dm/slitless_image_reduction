@@ -5,6 +5,9 @@ Looking at a PanStarrs Image
 '''
 from __future__ import print_function
 
+from builtins import str
+from builtins import range
+from builtins import object
 import os
 import sys
 import astropy.io.fits as pf
@@ -38,7 +41,7 @@ class panstarrs(object):
             lenX = int(head['IMNAXIS1'])
             lenY = int(head['IMNAXIS2'])
             instrument = 'ps1'
-            amp = range(1, namp+1)
+            amp = list(range(1, namp+1))
             prod_path = './'
             return [instrument, nccd, namp, lenX, lenY, fits, prod_path, amp]
         else:

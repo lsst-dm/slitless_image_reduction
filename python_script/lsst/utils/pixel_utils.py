@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 from __future__ import print_function
+from builtins import map
+from builtins import str
+from builtins import range
+from builtins import object
 import os
 import numpy as np
 import poloka.core as pc
@@ -112,7 +116,7 @@ class Rxx_flat(object):
 
     #(1) It strips area keywords
     def getsec(self, val):
-        field = map(str, val.strip('[]').split(','))
+        field = list(map(str, val.strip('[]').split(',')))
         i_in = int((field[0].split(':'))[0])
         i_fin = int((field[0].split(':'))[1])
         j_in = int((field[1].split(':'))[0])

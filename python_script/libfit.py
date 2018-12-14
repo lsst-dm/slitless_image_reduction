@@ -13,6 +13,11 @@
 """Extract_star classes and functions."""
 from __future__ import print_function
 
+from builtins import map
+from builtins import str
+from builtins import zip
+from builtins import range
+from builtins import object
 __author__ = "Y. Copin, C. Buton, E. Pecontal"
 __version__ = '$Id: libExtractStar.py,v 1.64 2016/01/11 17:30:12 ycopin Exp $'
 
@@ -97,9 +102,9 @@ def fit_metaslices(cube, psf_fn, skyDeg=0, nsky=2, chi2fit=True,
     alpha = None                         # Alpha guess
     channel = 'B' if cube.lstart < 5000. else 'R'
     if channel == 'B':                   # Blue cube
-        loop = range(cube.nslice)[::-1]  # Blueward loop
+        loop = list(range(cube.nslice))[::-1]  # Blueward loop
     else:                                # Red cube
-        loop = range(cube.nslice)        # Redward loop
+        loop = list(range(cube.nslice))        # Redward loop
 
     # Hyper-term on alpha from seeing prior and on position
     if scalePriors:
@@ -362,8 +367,8 @@ def extract_specs(cube, psf, skyDeg=0,
     if npar_sky:                        # =0 when no background (skyDeg<=-1)
         BF[:, :, 1] = 1                   # Constant background
         n = 2
-        for d in xrange(1, skyDeg + 1):
-            for j in xrange(d + 1):
+        for d in range(1, skyDeg + 1):
+            for j in range(d + 1):
                 # Background polynomials as function of spaxel (centered)
                 # position [spx]
                 BF[:, :, n] = cube.x ** (d - j) * cube.y ** j
@@ -471,7 +476,7 @@ def extract_specs(cube, psf, skyDeg=0,
     bkgnd = N.zeros_like(cube.data)
     var_bkgnd = N.zeros_like(cube.var)
     if npar_sky:
-        for d in xrange(1, npar_sky + 1):  # Loop over sky components
+        for d in range(1, npar_sky + 1):  # Loop over sky components
             bkgnd += (BF[:, :, d].T * sigspecs[:, d]).T
             var_bkgnd += (BF[:, :, d].T ** 2 * varspecs[:, d]).T
     subData = cube.data - bkgnd         # Bkgnd subtraction (nslice,nlens)
@@ -555,7 +560,7 @@ def extract_specs(cube, psf, skyDeg=0,
         # Extended model, nslice,extnlens
         subData = (sigspecs[:, 0] * extPsf.T).T
         subVar = N.zeros((extModel.nslice, extModel.nlens))
-        for i in xrange(model.nlens):
+        for i in range(model.nlens):
             # Embeb original spx i in extended model array by finding
             # corresponding index j in new array
             j, = ((extModel.x[0] == model.x[0, i]) &
@@ -589,10 +594,10 @@ def extract_specs(cube, psf, skyDeg=0,
 
         # Model variance = alpha*Signal + beta
         coeffs = N.array([polyfit_clip(modsig[s], cube.var[s], 1, clip=5)
-                          for s in xrange(cube.nslice)])
+                          for s in range(cube.nslice)])
         coeffs = median_filter(coeffs, (5, 1))  # A bit of smoothing...
         modvar = N.array([N.polyval(coeffs[s], modsig[s])
-                          for s in xrange(cube.nslice)])  # nslice,nlens
+                          for s in range(cube.nslice)])  # nslice,nlens
 
         # Optimal weighting
         norm = (frac * psf).sum(axis=1)  # PSF norm, nslice
@@ -740,7 +745,7 @@ def read_psf_ctes(hdr):
     # Count up alpha/ell coefficients (ES_Ann/ES_Enn) to get the
     # polynomial degrees
     def countKeys(regexp): return \
-        len([k for k in hdr.keys() if re.match(regexp, k)])
+        len([k for k in list(hdr.keys()) if re.match(regexp, k)])
 
     adeg = countKeys('ES_A\d+$') - 1
     edeg = countKeys('ES_E\d+$') - 1
@@ -757,8 +762,8 @@ def read_psf_param(hdr):
     """
 
     # Chromatic expansion coefficients
-    c_ell = [v for k, v in hdr.items() if re.match('ES_E\d+$', k)]
-    c_alp = [v for k, v in hdr.items() if re.match('ES_A\d+$', k)]
+    c_ell = [v for k, v in list(hdr.items()) if re.match('ES_E\d+$', k)]
+    c_alp = [v for k, v in list(hdr.items()) if re.match('ES_A\d+$', k)]
 
     lmin = hdr['ES_LMIN']
     lmax = hdr['ES_LMAX']
@@ -1046,7 +1051,7 @@ def flatAndPA(cy2, c2xy):
 # PSF classes ================================================================
 
 
-class ExposurePSF:
+class ExposurePSF(object):
 
     """
     Empirical PSF-3D function used by the `model` class.
@@ -1283,12 +1288,12 @@ class ExposurePSF:
             grad[1] = delta * self.ADRscale * \
                 (sintheta * grad[3] + costheta * grad[2])
             grad[4] = -tmp * dx * dy        # dPSF/dxy
-            for i in xrange(self.ellDeg + 1):  # dPSF/dei
+            for i in range(self.ellDeg + 1):  # dPSF/dei
                 grad[5 + i] = -tmp / 2 * dy2 * self.lrel ** i
             dalpha = gaussian * (e1 + s1 * r2 * j1 / sigma) + \
                 moffat * (-b1 * N.log(ea) + r2 * j2 / alpha)  # dPSF/dalpha
             if not self.model.endswith('powerlaw'):
-                for i in xrange(self.alphaDeg + 1):  # dPSF/dai, i=<0,alphaDeg>
+                for i in range(self.alphaDeg + 1):  # dPSF/dai, i=<0,alphaDeg>
                     grad[6 + self.ellDeg + i] = dalpha * self.lrel ** i
             else:
                 lrel = self.l / LbdaRef

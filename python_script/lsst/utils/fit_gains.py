@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import zip
+from builtins import object
 import os
 import sys
 import re
 import numpy as np
 import pylab as pl
 import exceptions
-import __builtin__
+import builtins
 import optparse
 import scipy.optimize as optimization
 import croaks
@@ -52,7 +56,7 @@ class fit_gains(object):
         return meanflatC, varianceC, reject_pixC, residuC
 
     def fitting_interval(self, meanflat, variance, reject_pix, residu, ampli):
-        c = zip(meanflat, variance, reject_pix, residu)
+        c = list(zip(meanflat, variance, reject_pix, residu))
         dtype = [('mean', float), ('var', float), ('rej', float), ('res', float)]
         a = np.array(c, dtype=dtype)
         aa = np.sort(a, order='mean')

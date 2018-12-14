@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
 from __future__ import absolute_import
+from builtins import str
+from builtins import zip
+from builtins import range
+from builtins import object
 import os
 import sys
 import numpy as np
@@ -163,7 +167,7 @@ class flatfield(object):
         #fits, wgth  = tb.readtxt(self.monochro_flat_list, ['fits', 'wavelength'])
         #path = self.monochro_flat_path
         fits, wgth = tb.readtxt(self.masterflat_list, ['fits', 'wavelength'])
-        out = zip(*sorted(zip(wgth, fits)))
+        out = list(zip(*sorted(zip(wgth, fits))))
         length = len(out[0])
         if length == 1:
             logging.info("using flat: " + self.masterflat_path + out[1][0])

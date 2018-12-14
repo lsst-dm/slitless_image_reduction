@@ -6,6 +6,8 @@ Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
 from __future__ import print_function
+from builtins import zip
+from builtins import range
 import astropy.io.fits as pf
 import numpy as np
 import os

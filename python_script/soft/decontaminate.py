@@ -6,6 +6,7 @@ aguyonnet@fas.harvard.edu
 '''
 from __future__ import print_function
 
+from builtins import zip
 import os
 import sys
 import re
@@ -30,7 +31,7 @@ if __name__ == "__main__":
         interp[np.isnan(interp)] = 0
         corrected_flux = values.field('psf_GM_flux') - interp
 
-        print('keys ', values.dtype.fields.keys())
+        print('keys ', list(values.dtype.fields.keys()))
         print('values ', values.item(1))
         print('values ', values.shape)
         outkey = names
@@ -51,15 +52,15 @@ if __name__ == "__main__":
 
         tb.DumpFile(outdict,
                     outkey,
-                    zip(*out),
+                    list(zip(*out)),
                     'test.list')
         print('writing : test.list')
 
         if show_stuff:
-            print('values : ', dict.values())
-            print('keys : ', dict.keys())
+            print('values : ', list(dict.values()))
+            print('keys : ', list(dict.keys()))
             #print values.field('w')
-            print('Dict : ', dict.items())
+            print('Dict : ', list(dict.items()))
             #print 'Array : ', values.field
             pl.plot(values.field('w'), values.field('psf_GM_flux'), label='raw flux')
             pl.plot(values.field('w'), corrected_flux, label='corrected')

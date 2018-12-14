@@ -6,6 +6,7 @@ aguyonnet@fas.harvard.edu
 '''
 from __future__ import print_function
 
+from builtins import zip
 import os
 import sys
 import re
@@ -278,6 +279,6 @@ if __name__ == "__main__":
 
     names = ['object', 'jd', 'airmass', 'parallactic', 'ew_w', 'ew_f', 'mean_seeing', 'pwv']
     tb.DumpTuple(names,
-                 zip(*outlist),
+                 list(zip(*outlist)),
                  outfile)
     print('writing : ', outfile)

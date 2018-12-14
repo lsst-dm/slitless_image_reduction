@@ -3,6 +3,9 @@
 from __future__ import absolute_import
 #!/usr/bin/env python
 
+from builtins import str
+from builtins import range
+from builtins import object
 from . import telinst as instru
 import os
 import sys

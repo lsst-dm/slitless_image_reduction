@@ -7,6 +7,8 @@ aguyonnet@fas.harvard.edu
 '''
 from __future__ import print_function
 
+from builtins import str
+from builtins import zip
 import os
 import sys
 import toolbox as tb
@@ -54,4 +56,4 @@ if __name__ == "__main__":
         data.append(obj)
 
     names = ['img']+['wght']+list(names)
-    tb.DumpTuple(names, zip(*data), 'cbp.list')
+    tb.DumpTuple(names, list(zip(*data)), 'cbp.list')

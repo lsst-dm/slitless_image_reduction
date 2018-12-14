@@ -3,6 +3,9 @@
 from __future__ import absolute_import
 #!/usr/bin/env python
 
+from builtins import zip
+from builtins import str
+from builtins import object
 from . import telinst as instru
 import os
 import sys
@@ -231,7 +234,7 @@ class spectrum(object):
         return
 
     def DumpSpectrum(self, head, names, list, file):
-        list = zip(*list)
+        list = list(zip(*list))
         info = np.rec.fromrecords([i for i in list], names=names)
 
         info = info.view(NTuple)

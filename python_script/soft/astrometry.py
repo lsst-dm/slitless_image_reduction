@@ -9,6 +9,7 @@ aguyonnet@fas.harvard.edu
 from __future__ import print_function
 #from __future__ import division, print_function
 
+from builtins import zip
 import os
 import sys
 import re
@@ -211,4 +212,4 @@ if __name__ == "__main__":
                 print('output entries : ', columns)
 
     print('writing ', outcat)
-    tb.DumpTuple(columns, zip(*data), outcat)
+    tb.DumpTuple(columns, list(zip(*data)), outcat)

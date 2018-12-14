@@ -6,6 +6,9 @@ aguyonnet@fas.harvard.edu
 '''
 from __future__ import print_function
 
+from builtins import map
+from builtins import zip
+from builtins import range
 import os
 import sys
 import re
@@ -246,7 +249,7 @@ if __name__ == "__main__":
                 print(ew_w, ew_f)
                 minimize.append([slide, ew_w, ew_f])
 
-            search = list(map(list, zip(*minimize)))
+            search = list(map(list, list(zip(*minimize))))
             MAX = max(search[2])
             for s in minimize:
                 print(s)
@@ -265,13 +268,13 @@ if __name__ == "__main__":
 
         names = ['object', 'expected', 'jd', 'airmass', 'parallactic', 'ew_w', 'ew_f', 'mean_seeing', 'pwv']
         tb.DumpTuple(names,
-                     zip(*outlist),
+                     list(zip(*outlist)),
                      outfile)
         print('writing : ', outfile)
 
         ''' Refit the dispersion relation by matching absorption features '''
         ''' between the observation and a template                '''
-        search = list(map(list, zip(*outlist)))
+        search = list(map(list, list(zip(*outlist))))
         Lm = search[1]
         Lo = search[5]
         fit_coef, ew_position = Fit(Lm, Lo, plot=plot)
@@ -297,4 +300,4 @@ if __name__ == "__main__":
         print('writing ', outcat)
         names = names + ['wght_recal']
         print('output entries : ', names)
-        tb.DumpTuple(names, zip(*z), outcat)
+        tb.DumpTuple(names, list(zip(*z)), outcat)

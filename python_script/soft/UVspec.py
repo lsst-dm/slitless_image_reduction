@@ -1,4 +1,7 @@
 from __future__ import print_function
+from builtins import map
+from builtins import str
+from builtins import object
 from subprocess import Popen, PIPE, STDOUT, call
 import os
 import scipy
@@ -7,7 +10,7 @@ from scipy.optimize import leastsq
 home = os.environ['HOME']
 
 
-class UVspec:
+class UVspec(object):
     def __init__(self, home=''):
         if home == '':
             self.home = os.environ['HOME']
@@ -221,7 +224,7 @@ def convert_file(fn, conversion):
         comment = line.find('#')
         if comment == 0:
             continue
-        stuff = map(float, line.split())
+        stuff = list(map(float, line.split()))
         wvl = stuff[0]
         print('{0:12.6f} '.format(wvl))
         for val in stuff[1:len(stuff)]:

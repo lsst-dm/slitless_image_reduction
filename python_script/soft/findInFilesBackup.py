@@ -7,6 +7,7 @@ aguyonnet@fas.harvardedu
 '''
 from __future__ import print_function
 
+from builtins import str
 import os
 import sys
 import pylab as pl
@@ -39,7 +40,7 @@ if __name__ == "__main__":
         found = 0
         data = NTuple.fromtxt(file)
         for k in values:
-            for key, val in data.keys.iteritems():
+            for key, val in data.keys.items():
                 if ((str(val).lower()).find(k.lower()) >= 0):
                     found += 1
                     break
@@ -55,7 +56,7 @@ if __name__ == "__main__":
     for spectrum in out:
         print(spectrum)
         data = NTuple.fromtxt(spectrum)
-        fields = data.dtype.fields.keys()
+        fields = list(data.dtype.fields.keys())
         print(fields)
         x = np.array(data[:]['w'])
         y = np.array(data[:]['aper_flux'])

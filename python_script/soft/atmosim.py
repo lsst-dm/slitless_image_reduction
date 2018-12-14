@@ -11,6 +11,7 @@
 #
 #################################################################
 from __future__ import print_function
+from builtins import str
 import os
 import re
 import math
@@ -273,7 +274,7 @@ if __name__ == "__main__":
 #        uvspec.inp["verbose"] = ''
         uvspec.inp["quiet"] = ''
 
-        if "output_quantity" in uvspec.inp.keys():
+        if "output_quantity" in list(uvspec.inp.keys()):
             outtextfinal = outtext+'_'+uvspec.inp["output_quantity"]
 
         inputFilename = BaseFilename+'.INP'

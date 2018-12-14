@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 from __future__ import print_function
+from past.builtins import execfile
+from builtins import zip
+from builtins import str
+from builtins import map
+from builtins import range
 import os
 import re
 import numpy as np
@@ -157,7 +162,7 @@ def DumpTuple(names, list, file):
     for i in names:
         out.write('# '+i + ' :' + '\n')
     out.write('#end' + '\n')
-    list = zip(*list)
+    list = list(zip(*list))
     for i in list:
         out.write(' '.join(map("{}".format, i))+'\n')
     out.close()
@@ -165,13 +170,13 @@ def DumpTuple(names, list, file):
 
 
 def DumpFile(keys, names, list, file):
-    list = zip(*list)
+    list = list(zip(*list))
     info = np.rec.fromrecords([i for i in list], names=names)
     info = info.view(NTuple)
 
     print(type(keys))
 
-    for key, value in keys.iteritems(): # to remove '' from items
+    for key, value in keys.items(): # to remove '' from items
         print(key, value, type(value))
         if(type(value) == list):
             info.keys[key] = ' '.join(value)

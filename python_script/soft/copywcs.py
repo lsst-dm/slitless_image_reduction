@@ -53,11 +53,11 @@ if __name__ == "__main__":
     hdulist1 = fits.open(ref)
     w = wcs.WCS(hdulist1[0].header)
     header = w.to_header()
-    print(header.values(), header.keys(), header.items())
+    print(list(header.values()), list(header.keys()), list(header.items()))
 
     for target in targets:
         hdulist2 = fits.open(target, mode='update')
         target_header = hdulist2[0].header
-        target_header.extend(header.items())
+        target_header.extend(list(header.items()))
         print(repr(header))
         hdulist2.flush()

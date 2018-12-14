@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+from builtins import zip
+from builtins import str
+from builtins import range
 import os
 import sys
 import re
@@ -14,14 +17,14 @@ class LSST_utils(Exception):
 
 
 def segments():
-    ret = ['%02d' % amp for amp in xrange(10, 18)]
-    ret2 = ['%02d' % amp for amp in xrange(0, 8)]
+    ret = ['%02d' % amp for amp in range(10, 18)]
+    ret2 = ['%02d' % amp for amp in range(0, 8)]
     ret.extend(ret2[::-1])
     return (ret)
 
 
 def amp():
-    num = ['%d' % amp for amp in xrange(1, 17)]
+    num = ['%d' % amp for amp in range(1, 17)]
     return num
 
 
@@ -31,7 +34,7 @@ def seg2amp(seg):
         seg = '0'+seg
     segm = segments()
     ampl = amp()
-    c = dict(zip(segm, ampl))
+    c = dict(list(zip(segm, ampl)))
     return c[str(seg)]
 
 
@@ -39,7 +42,7 @@ def amp2seg(ampli):
     ampli = str(ampli)
     segm = segments()
     ampl = amp()
-    c = dict(zip(ampl, segm))
+    c = dict(list(zip(ampl, segm)))
     return c[str(ampli)]
 
 ### 2 lists with pair images

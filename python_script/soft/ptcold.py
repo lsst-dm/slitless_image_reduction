@@ -8,6 +8,8 @@ aguyonnet@fas.harvard.edu
 from __future__ import print_function
 
 
+from builtins import zip
+from builtins import range
 import os
 import sys
 import astropy.io.fits as pf

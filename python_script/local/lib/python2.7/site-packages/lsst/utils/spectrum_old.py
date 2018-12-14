@@ -2,6 +2,11 @@
 
 from __future__ import print_function
 from __future__ import absolute_import
+from builtins import next
+from builtins import str
+from builtins import zip
+from builtins import range
+from builtins import object
 from . import telinst as instru
 import matplotlib.cm as cm
 import os
@@ -349,7 +354,7 @@ class spectrum(object):
             self.ControlPlot1(X, self.calib_profile, calib_flat, self.aper_flux)
 
     def DumpSpectrum(self, head, names, list, file):
-        list = zip(*list)
+        list = list(zip(*list))
         info = np.rec.fromrecords([i for i in list], names=names)
 
         info = info.view(NTuple)
@@ -440,7 +445,7 @@ class spectrum(object):
         #fits, wgth  = tb.readtxt(self.monochro_flat_list, ['fits', 'wavelength'])
         #path = self.monochro_flat_path
         fits, wgth = tb.readtxt(self.masterflat_list, ['fits', 'wavelength'])
-        out = zip(*sorted(zip(wgth, fits)))
+        out = list(zip(*sorted(zip(wgth, fits))))
         length = len(out[0])
         if length == 1:
             ref1 = instru.telinst(self.masterflat_path + out[1][0])

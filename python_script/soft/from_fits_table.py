@@ -7,6 +7,7 @@ aguyonnet@harvard.fas.edu
 '''
 from __future__ import print_function
 
+from builtins import str
 import sys
 
 import numpy as np

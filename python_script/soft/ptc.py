@@ -8,6 +8,9 @@ aguyonnet@fas.harvard.edu
 from __future__ import print_function
 
 
+from builtins import zip
+from builtins import str
+from builtins import range
 import os
 import sys
 import astropy.io.fits as pf
@@ -59,7 +62,7 @@ def compute_corr_fft(diff, w, maxrange, fft_shape):
     pcount = np.fft.irfft2(tmask*tmask.conjugate())
     l = []
     # (dy,dx) = (0,0) has to be first
-    for dy in range(maxrange+1)+range(-1, -maxrange-1, -1):
+    for dy in list(range(maxrange+1))+list(range(-1, -maxrange-1, -1)):
         for dx in range(0, maxrange+1):
             npix = pcount[dy, dx]
             cov = pcov[dy, dx]/npix-pmean[dy, dx]*pmean[-dy, -dx]/(npix*npix)

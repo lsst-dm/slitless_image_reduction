@@ -6,6 +6,8 @@ Author: Augustin Guyonnet
 guyonnet@fas.harvard.edu
 '''
 
+from builtins import zip
+from builtins import str
 import os
 import sys
 import astropy.io.fits as pf

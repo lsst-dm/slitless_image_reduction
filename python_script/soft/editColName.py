@@ -13,6 +13,7 @@ https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.recarray.html
 '''
 from __future__ import print_function
 
+from builtins import zip
 import os
 import sys
 import re
@@ -65,4 +66,4 @@ if __name__ == "__main__":
         outcat = file
         print('writing ', outcat)
         print('output entries : ', columns)
-        tb.DumpTuple(columns, zip(*data), outcat)
+        tb.DumpTuple(columns, list(zip(*data)), outcat)

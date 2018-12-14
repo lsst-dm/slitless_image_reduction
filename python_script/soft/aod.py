@@ -7,6 +7,10 @@ aguyonnet@fas.harvard.edu
 '''
 from __future__ import print_function
 
+from builtins import next
+from builtins import zip
+from builtins import str
+from builtins import object
 import os
 import sys
 import re
@@ -290,6 +294,6 @@ if __name__ == "__main__":
 
     names = ['median_param', 'z[0]', 'alpha', 'salpha', 'tau', 'stau']
     tb.DumpTuple(names,
-                 zip(*outlist),
+                 list(zip(*outlist)),
                  outfile)
     print('writing : ', outfile)
