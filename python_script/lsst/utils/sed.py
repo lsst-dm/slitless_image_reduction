@@ -14,7 +14,7 @@ import re
 import logging
 import scipy.ndimage.filters as filt
 import scipy.interpolate as interp
-from . import toolbox as tb
+import toolbox as tb
 
 # ===========================================================
 

@@ -7,7 +7,7 @@ from builtins import str
 from builtins import zip
 from builtins import range
 from builtins import object
-from . import telinst as instru
+import telinst as instru
 import matplotlib.cm as cm
 import os
 import sys
@@ -21,11 +21,11 @@ from scipy.optimize import curve_fit
 from scipy import integrate
 import operator
 from croaks import NTuple
-from . import toolbox as tb
+import toolbox as tb
 import astropy.time
 import dateutil.parser
-from . import reduceimage as ri
-from . import extraction as ex
+import reduceimage as ri
+import extraction as ex
 import logging
 from astropy.stats import sigma_clip
 from astropy.modeling import models, fitting

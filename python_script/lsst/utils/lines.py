@@ -19,7 +19,7 @@ import sys
 import re
 import numpy as np
 import pylab as pl
-from . import toolbox as tb
+import toolbox as tb
 import croaks
 import scipy.interpolate as interp
 import scipy.ndimage.filters as filt

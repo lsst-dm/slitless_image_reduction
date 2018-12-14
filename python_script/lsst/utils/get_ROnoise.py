@@ -8,9 +8,9 @@ import numpy as np
 import pylab
 import pyfits
 import optparse
-from . import seg_output as seg
+import seg_output as seg
 import poloka.core as pc
-from . import pixel_utils as pu
+import pixel_utils as pu
 
 code_name = "<mask_tearing.py> "
 

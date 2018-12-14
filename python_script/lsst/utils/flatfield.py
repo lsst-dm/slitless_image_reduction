@@ -11,11 +11,11 @@ import numpy as np
 import matplotlib.pyplot as pl
 import scipy.interpolate as interp
 from scipy.interpolate import griddata
-from . import toolbox as tb
+import toolbox as tb
 import logging
 from astropy.stats import sigma_clip
-from . import extraction as ex
-from . import telinst as instru
+import extraction as ex
+import telinst as instru
 import astropy.io.fits as pf
 
 

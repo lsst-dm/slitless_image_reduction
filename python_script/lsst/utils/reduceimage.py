@@ -8,13 +8,13 @@ from builtins import object
 import os
 import sys
 import re
-from . import telinst as instru
+import telinst as instru
 import numpy as np
 import pylab as pl
-from . import spectrum
+import spectrum
 import astropy.io.fits as pf
 import logging
-from . import toolbox as tb
+import toolbox as tb
 import logging
 
 
