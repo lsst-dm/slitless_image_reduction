@@ -6,6 +6,7 @@ give a raw fitsimage, position of object in it,
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -35,9 +36,9 @@ def readtxt(inputfile, dic=[]):
 if __name__ == "__main__":
     narg = len(sys.argv)
     if narg < 2:
-        print "process.py [-i -j fitsimage] of [fitsimages]"
-        print "If keword is none, print whole header"
-        print
+        print("process.py [-i -j fitsimage] of [fitsimages]")
+        print("If keword is none, print whole header")
+        print()
     k = 1
     while(k < narg):
         if(sys.argv[k] == "-r"):
@@ -72,7 +73,7 @@ if __name__ == "__main__":
 
     [wgth, flux], keys = readtxt(raw_spectrum, ['w', 'rawflux'])
     airmass = keys['AIRMASS']
-    print 'airmass : ', airmass
+    print('airmass : ', airmass)
 
     sed.flux = interp.griddata(sed.wavelength, sed.flux, wgth)
     trans = flux/sed.flux

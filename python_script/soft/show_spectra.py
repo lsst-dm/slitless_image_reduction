@@ -5,6 +5,7 @@ return plots of equivalent width
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -48,17 +49,17 @@ if __name__ == "__main__":
         filters = keys['FILTERS']
         obj = re.split('[ /]', keys['IMG_NAME'])
         img = obj[-2]
-        print
-        print 'raw file : ', obj[0], img, filters
-        print file
+        print()
+        print('raw file : ', obj[0], img, filters)
+        print(file)
         aperture = file.split('/')[-2].split('_')[-1].split('aper')[-1]
-        print aperture
+        print(aperture)
         if (str(aperture) == '100'):
-            print 'reference is aper 100'
+            print('reference is aper 100')
             reference = values[2]
             wght = values[0]
 
-        print len(wght), len(values[0])
+        print(len(wght), len(values[0]))
         color = next(colors)
 
         if (str(aperture) != '100'):
@@ -74,7 +75,7 @@ if __name__ == "__main__":
         if (str(aperture) == '100'):
             pl.figure()
             title = str(img)+' ' + str(filters)
-            print 'title :', title, img
+            print('title :', title, img)
             pl.title(title)
             pl.xlim([700, 1000])
             pl.ylabel('aper_flux ')

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import os
 import sys
 import matplotlib.cm as cm
@@ -234,8 +235,8 @@ class extract(object):
                 ''' begin Control plot'''
                 if(self.plot == True):
                     if((not i % 10)and(i < 400)):
-                        print 'aper : ', i, self.aper_flux[i]
-                        print i, self.psf_gauss_flux[i], self.psf_gauss_sigma[i], self.psf_gauss_mu[i], amplitude
+                        print('aper : ', i, self.aper_flux[i])
+                        print(i, self.psf_gauss_flux[i], self.psf_gauss_sigma[i], self.psf_gauss_mu[i], amplitude)
                         #fit = Gauss1D(pixels, *coeff)
                         pl.xlabel('Spectrum spatial profile (pixel)')
                         pl.ylabel('Amplitude (ADU)')
@@ -323,7 +324,7 @@ class extract(object):
                                                   bounds=(0., [1E6, 100., 10.]))
                     break
                 except RuntimeError:
-                    print "Minimization failed"
+                    print("Minimization failed")
                     break
 
             sigma = coeff[2]
@@ -462,7 +463,7 @@ class extract(object):
                         integral = np.sqrt(2 * np.pi) * sigma * amplitude # Gaussian integral
 
                     except RuntimeError:
-                        print 'RuntimeError - moving on'
+                        print('RuntimeError - moving on')
                         #break
 
                 psf_flux.append(integral)
@@ -486,7 +487,7 @@ class extract(object):
         if (mode == 'psf'):
             showProfil(PIX, PROJ)
 
-        print 'mode ', mode, ' length ', len(pixel)
+        print('mode ', mode, ' length ', len(pixel))
         len(aper_flux), len(psf_mu), len(psf_flux), len(psf_sigma)
         self.psf_gauss_flux = psf_flux
         self.psf_gauss_sigma = psf_sigma

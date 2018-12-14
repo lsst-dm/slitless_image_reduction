@@ -5,6 +5,7 @@ compare regression to zero airmass with SED
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -93,7 +94,7 @@ if __name__ == "__main__":
     psf_gauss_sigma = values.field('psf_gauss_sigma')
     pix2wght = float(dict.get('PIX2WGTH')[0])
 
-    print 'Obs regression : ', obs
+    print('Obs regression : ', obs)
     [wght, intercept, sintercept], keys = tb.readlist(obs, ['wght', 'intercept', 'sintercept'])
 
     '''Determination of the seeing at wght, from the sigma of gaussian fit orthogonal'''
@@ -138,7 +139,7 @@ if __name__ == "__main__":
     norm = np.nanmax(t_tel)
     t_tel = np.array(t_tel)/norm
 
-    print 'Telescope reference calibration from : ', calib
+    print('Telescope reference calibration from : ', calib)
     [wght2, qe], keys = tb.readlist(calib, ['wght', 'qe'])
     norm = np.nanmax(qe)
     qe = np.array(qe)/norm

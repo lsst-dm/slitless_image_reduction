@@ -5,6 +5,7 @@ grep keywords from header of a fits image
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -26,15 +27,15 @@ def getheader(filename, keys=[]):
     if not keys:
         print(repr(head))
     else:
-        print filename, [head.get(k) for k in keys]
+        print(filename, [head.get(k) for k in keys])
 
 
 if __name__ == "__main__":
     narg = len(sys.argv)
     if narg < 2:
-        print "header.py [fitsimage(s)] -k [keyword(s)]"
-        print "If keyword is none, print whole header"
-        print
+        print("header.py [fitsimage(s)] -k [keyword(s)]")
+        print("If keyword is none, print whole header")
+        print()
     keywords = []
     Images = []
     k = 1

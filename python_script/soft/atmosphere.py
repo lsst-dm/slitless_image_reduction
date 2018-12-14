@@ -5,6 +5,7 @@ return wght calibrated spectrum + forward model + EW measurements
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -60,7 +61,7 @@ class Modeling(object):
         Ttel = interp.griddata(w, Ttel, self.sed_wavelength)
         SedTel = self.sed_flux * Ttel
         norm = np.nanmax(SedTel)
-        print norm
+        print(norm)
         SedTel = np.array(SedTel)/norm
         signal = np.array(signal)
         signal = interp.griddata(wavelength, signal, self.sed_wavelength)
@@ -75,7 +76,7 @@ class Modeling(object):
                     ['w', 'tatmo'],
                     [w, tatmo],
                     os.path.join(self.directory, str('Tatmo'+name+'.list')))
-        print 'writing : ', os.path.join(self.directory, str('Tatmo'+name+'.list'))
+        print('writing : ', os.path.join(self.directory, str('Tatmo'+name+'.list')))
         if (self.plot == True):
             fig2 = pl.figure()
             pl.plot(self.sed_wavelength, Ttel, label='Telescope Throughput')
@@ -175,19 +176,19 @@ if __name__ == "__main__":
         if not os.path.isfile(input_file):
             continue
 
-        print 'reading ', input_file
+        print('reading ', input_file)
         dict, array, names = tb.readcat(input_file)
         target = ' '.join(dict.get('OBJECT'))
-        print target
+        print(target)
         if not target:
             continue
 
         filters = ' '.join(dict.get('FILTERS'))
         if (str(filters).find('RG715') >= 0):
-            print 'RG715 filter in place'
+            print('RG715 filter in place')
             tel_t = 'rg715'
         else:
-            print 'Telescope set up open'
+            print('Telescope set up open')
             tel_t = 'open'
 
         seeing = float(dict.get('SEEING')[0]) # This is currently not a good measurement
@@ -234,7 +235,7 @@ if __name__ == "__main__":
         if flux == 'flux_deco':
             best_flux = array[:, 15]
 
-        print 'flux :', flux
+        print('flux :', flux)
         if plot:
             pl.plot(w, best_flux)
             pl.show()

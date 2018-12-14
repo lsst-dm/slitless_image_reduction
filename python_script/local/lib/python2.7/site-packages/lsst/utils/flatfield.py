@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 
+from __future__ import absolute_import
 import os
 import sys
 import numpy as np
 import matplotlib.pyplot as pl
 import scipy.interpolate as interp
 from scipy.interpolate import griddata
-import toolbox as tb
+from . import toolbox as tb
 import logging
 from astropy.stats import sigma_clip
-import extraction as ex
-import telinst as instru
+from . import extraction as ex
+from . import telinst as instru
 import astropy.io.fits as pf
 
 

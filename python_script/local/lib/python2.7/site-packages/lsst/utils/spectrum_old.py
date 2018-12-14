@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import telinst as instru
+from __future__ import print_function
+from __future__ import absolute_import
+from . import telinst as instru
 import matplotlib.cm as cm
 import os
 import sys
@@ -14,11 +16,11 @@ from scipy.optimize import curve_fit
 from scipy import integrate
 import operator
 from croaks import NTuple
-import toolbox as tb
+from . import toolbox as tb
 import astropy.time
 import dateutil.parser
-import reduceimage as ri
-import extraction as ex
+from . import reduceimage as ri
+from . import extraction as ex
 import logging
 from astropy.stats import sigma_clip
 from astropy.modeling import models, fitting
@@ -722,7 +724,7 @@ class spectrum(object):
                         integral = np.sqrt(2 * np.pi) * sigma * amplitude # Gaussian integral
 
                     except RuntimeError:
-                        print 'RuntimeError - moving on'
+                        print('RuntimeError - moving on')
                         #break
 
                 psf_flux.append(integral)
@@ -746,7 +748,7 @@ class spectrum(object):
         if (mode == 'psf'):
             showProfil(PIX, PROJ)
 
-        print 'mode ', mode, ' length ', len(pixel)
+        print('mode ', mode, ' length ', len(pixel))
         len(aper_flux), len(psf_mu), len(psf_flux), len(psf_sigma)
         self.psf_gauss_flux = psf_flux
         self.psf_gauss_sigma = psf_sigma

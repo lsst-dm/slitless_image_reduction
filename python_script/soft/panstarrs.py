@@ -3,6 +3,7 @@
 Looking at a PanStarrs Image
 
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -81,11 +82,11 @@ class panstarrs(object):
         for amp in self.amp:
             list = self.OutRegion(amp)
             frame = self.IlluRegion(self.fits[amp].data, amp)
-            print 'Amp, Boundaries : ', amp, list
+            print('Amp, Boundaries : ', amp, list)
             if self.flip == True:
                 frame = np.fliplr(frame)
             if gain is True:
-                print amp, self.Gain(amp)
+                print(amp, self.Gain(amp))
                 frame *= self.Gain(amp)
             outimg[list[0]:list[1], list[2]:list[3]] = frame
         return outimg
@@ -119,7 +120,7 @@ class panstarrs(object):
         gain = self.fits[amp].header.get('GAIN')
         if gain is None:
             gain = 1.
-            print 'amp = ', amp, ' No gain found, default=1'
+            print('amp = ', amp, ' No gain found, default=1')
         return gain
 
 

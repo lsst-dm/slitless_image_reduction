@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import os
 import sys
 import re
@@ -53,7 +54,7 @@ def determine_gain(meanflat, variance, ampli, color):
     KN = khi2 / ((len(sigma)) - param)
     g = 1/fitGain[1]
     sg = b_error/(fitGain[1]*fitGain[1])
-    print 'Ampli : ', ampli, " gain = ", g, " +/- ", sg, ' e/ADU'
+    print('Ampli : ', ampli, " gain = ", g, " +/- ", sg, ' e/ADU')
     #print "sigma = ", sigma.mean(), " variance = ", variance.mean()
     fig = pl.figure(1)
     p1 = pl.errorbar(meanflat, variance, yerr=sigma, xerr=zeros, fmt='^', markersize=6, color=next(colors))
@@ -61,7 +62,7 @@ def determine_gain(meanflat, variance, ampli, color):
     #fitquad = pl.polyval(2*meanflat, meanflat)
     meanflat = np.sort(meanflat)
     #ratio = (((g*2E4) - (a*(2E4*g)*(2E4*g) + b*(2E4*g) + c)) / (a*(2E4*g)*(2E4*g) + b*(2E4*g) + c))
-    print " khi2/NdF = ", KN
+    print(" khi2/NdF = ", KN)
     pl.plot(meanflat, a*meanflat*meanflat + b*meanflat + c, color='k',
             label='amp ' + str(ampli)+' g = '+str(round(g, 2))+' (e/ADU)')
     #pl.plot(meanflat,b*meanflat + c,'b') # show linear part

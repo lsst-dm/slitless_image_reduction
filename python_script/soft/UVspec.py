@@ -1,3 +1,4 @@
+from __future__ import print_function
 from subprocess import Popen, PIPE, STDOUT, call
 import os
 import scipy
@@ -32,14 +33,14 @@ class UVspec:
 
     def run(self, inp, out, verbose, path=''):
         if verbose:
-            print("Running uvspec with input file: ", inp)
-            print("Output to file                : ", out)
+            print(("Running uvspec with input file: ", inp))
+            print(("Output to file                : ", out))
         if path != '':
             cmd = path+'bin/uvspec ' + ' < ' + inp + ' > ' + out
         else:
             cmd = self.home+'/libRadtran/bin/uvspec ' + ' < ' + inp + ' > ' + out
         if verbose:
-            print("uvspec cmd: ", cmd)
+            print(("uvspec cmd: ", cmd))
 #        p   = call(cmd,shell=True,stdin=PIPE,stdout=PIPE)
         p = Popen(cmd, shell=True, stdout=PIPE)
         p.wait()
@@ -195,8 +196,8 @@ def remove_option(fi, fo, option):
 
 def run(inp, out, verbose):
     if verbose:
-        print("Running uvspec with input file: ", inp)
-        print("Output to file                : ", out)
+        print(("Running uvspec with input file: ", inp))
+        print(("Output to file                : ", out))
         log = out+'_verbose.txt'
     cmd = home+'/libRadtran/bin/uvspec ' + ' < ' + inp + ' > ' + out
     #cmd ='('+ home+'/libRadtran/bin/uvspec '+  ' < ' + inp  +  ' > ' + out +')>&'+log

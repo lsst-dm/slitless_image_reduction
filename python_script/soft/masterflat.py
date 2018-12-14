@@ -5,6 +5,7 @@ Take the median of a stack of normalized images
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -14,9 +15,9 @@ import telinst as instru
 
 
 def usage():
-    print "return a masterflat from median combining normalized flats"
-    print "Usage: masterflat.py [result_image_name] [masterbias_subtracted2eachflat] [list_of_flat]"
-    print
+    print("return a masterflat from median combining normalized flats")
+    print("Usage: masterflat.py [result_image_name] [masterbias_subtracted2eachflat] [list_of_flat]")
+    print()
     sys.exit(1)
 
 

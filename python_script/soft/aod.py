@@ -5,6 +5,7 @@ divide spectra by a spectrum at a reference airmass and fit AOD
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -80,14 +81,14 @@ def measureAOD(W, Z, F, O, length, refW, refF, WS, FS, refWS, refFS,
         wghtr, ratioC = trim(refW, ratio, Range)
         coef, var_matrix = fitf.aerosol(wghtr, ratioC)
 
-        print
+        print()
         alpha = coef[0]
         salpha = np.sqrt(var_matrix[0][0])
         tau = coef[1]
         stau = np.sqrt(var_matrix[1][1])
-        print 'alpha = ', alpha, ' +/- ', np.sqrt(var_matrix[0][0])
-        print ' tau  = ', tau, ' +/- ', stau
-        print
+        print('alpha = ', alpha, ' +/- ', np.sqrt(var_matrix[0][0]))
+        print(' tau  = ', tau, ' +/- ', stau)
+        print()
         out.append([median_param, z[0], alpha, salpha, tau, stau])
         fit = fitf.tau(wghtr, *[alpha, tau])
 
@@ -135,12 +136,12 @@ def getMedian(files, param):
         [wght, flux], keys = tb.readlist(file, ['w', 'aper_flux'])
         list.append(float(keys[str(param)]))
     median = np.median(list)
-    print 'median is ', median
+    print('median is ', median)
     return median
 
 
 def extractData(file, inputype):
-    print 'reading ', file
+    print('reading ', file)
     if (inputype == 'obs'):
         [wght, flux], keys = tb.readlist(file, ['w', 'aper_flux'])
         airmass = keys['AIRMASS']
@@ -232,21 +233,21 @@ if __name__ == "__main__":
         #files = [simu_path + 'best/RT_LS_pp_tp_sa_rt_z2047_wv100_oz40.OUT', simu_path + 'best/RT_LS_pp_tp_sa_rt_z1379_wv100_oz40.OUT']
         files = simu_path + 'best/RT_LS_pp_tp_sa_rt_z*_wv100_oz40.OUT'
         files = (glob.glob(files))
-        print files
+        print(files)
 
     for file in files:
-        print 'With aerosols :'
+        print('With aerosols :')
         if doublecheck:
             wght, flux, airmass, Object, exptime = extractData(file, 'simu')
         else:
             wght, flux, airmass, Object, exptime = extractData(file, inputype)
 
         '''extract the simu at same airmass'''
-        print 'without aerosol ;'
+        print('without aerosol ;')
         filesimu = simu_path + 'no_aerosol/RT_LS_pp_tp_sa_rt_z'+str(int(airmass*1000))+'_wv100_oz40.OUT'
-        print filesimu
+        print(filesimu)
         if not os.path.exists(filesimu):
-            print filesimu, ' not found -> continue'
+            print(filesimu, ' not found -> continue')
             continue
         else:
             wghtS, fluxS, airmassS, ObjectS, exptimeS = extractData(filesimu, 'simu')
@@ -255,7 +256,7 @@ if __name__ == "__main__":
         Selected a clean range
         '''
         if(airmass >= 2.1):
-            print 'airmass is above 2.1'
+            print('airmass is above 2.1')
             continue
 
         '''trimming spectra'''
@@ -263,7 +264,7 @@ if __name__ == "__main__":
         wghtS, fluxS = trim(wghtS, fluxS, Range)
 
         flux = flux/exptime
-        print Object, 'airmass ', airmass, len(wght), wght[0], wght[-1]
+        print(Object, 'airmass ', airmass, len(wght), wght[0], wght[-1])
 
         if(float(airmass) == median_param):
             refW = wght
@@ -291,4 +292,4 @@ if __name__ == "__main__":
     tb.DumpTuple(names,
                  zip(*outlist),
                  outfile)
-    print 'writing : ', outfile
+    print('writing : ', outfile)

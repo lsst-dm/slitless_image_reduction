@@ -5,6 +5,7 @@ Test code for spectra extraction of slitless data
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 import astropy.io.fits as pf
 import numpy as np
 import os
@@ -29,7 +30,7 @@ def result(fits):
 
     cat = pysex.run(fits, params=['X_IMAGE', 'Y_IMAGE', 'FLUX_APER'],
                     conf_args={'PHOT_APERTURES': 5})
-    print cat['FLUX_APER']
+    print(cat['FLUX_APER'])
 
     image = afwImage.MaskedImageF(fits)
 

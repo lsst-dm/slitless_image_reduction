@@ -5,6 +5,7 @@ from a raw fitsimage return a spectrum
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -163,5 +164,5 @@ if __name__ == "__main__":
                                        offset=100)
 
         if plot:
-            print 'show plots'
+            print('show plots')
             pl.show()

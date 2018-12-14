@@ -5,6 +5,7 @@ return plots of spectra
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -23,7 +24,7 @@ if __name__ == "__main__":
     values = []
     fig = pl.figure()
     for file in files:
-        print file
+        print(file)
         name = os.path.basename(file)
         value, keys = tb.readlist(file, ('wavelength', 'contamination'))
         values.append(value)

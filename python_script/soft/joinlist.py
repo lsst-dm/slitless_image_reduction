@@ -5,6 +5,7 @@ divide QE by CBP transmission
 Author: Augustin Guyonnet
 aguyonnet@fas.harvardedu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -17,9 +18,9 @@ from croaks import NTuple
 if __name__ == "__main__":
     narg = len(sys.argv)
     if narg < 2:
-        print "joinlist.py file1 file2"
-        print "join points"
-        print
+        print("joinlist.py file1 file2")
+        print("join points")
+        print()
 
     file1 = sys.argv[1]
     file2 = sys.argv[2]
@@ -34,7 +35,7 @@ if __name__ == "__main__":
     for i, item2 in enumerate(data2):
         img = ((item2[0].split("\\")[-1]).strip('.fits').split('_'))[-1]
         data2[i, 0] = img
-        print i, data2[i, 0]
+        print(i, data2[i, 0])
 
     #sys.exit()
     img = []
@@ -44,7 +45,7 @@ if __name__ == "__main__":
     for item1 in data1:
         for item2 in data2:
             if(int(item1[0]) == int(item2[0])):
-                print 'match ', item1[0], item1[1], item1[2], item2[1], item2[2]
+                print('match ', item1[0], item1[1], item1[2], item2[1], item2[2])
                 img.append(item1[0])
                 wght.append(item1[1])
                 res.append(float(item2[2])/float(item1[2]))

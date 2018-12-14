@@ -10,6 +10,7 @@
 #
 #
 #################################################################
+from __future__ import print_function
 import os
 import re
 import math
@@ -59,11 +60,11 @@ def ensure_dir(f):
 
 
 def usage():
-    print "*******************************************************************"
-    print sys.argv[0], ' -z <airmass> -w <pwv> -o <oz>'
-    print 'Number of arguments:', len(sys.argv), 'arguments.'
-    print 'Argument List:', str(sys.argv)
-    print "*******************************************************************"
+    print("*******************************************************************")
+    print(sys.argv[0], ' -z <airmass> -w <pwv> -o <oz>')
+    print('Number of arguments:', len(sys.argv), 'arguments.')
+    print('Argument List:', str(sys.argv))
+    print("*******************************************************************")
 
 
 def main(argv):
@@ -73,7 +74,7 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "hz:w:o:", ["am=", "pwv=", "oz="])
     except getopt.GetoptError:
-        print 'test.py -z <airmass> -w <pwv> -o <oz>'
+        print('test.py -z <airmass> -w <pwv> -o <oz>')
         sys.exit(2)
 
     for opt, arg in opts:
@@ -87,11 +88,11 @@ def main(argv):
         elif opt in ("-o", "--oz"):
             oz_str = arg
 
-    print '--------------------------------------------'
-    print '1) airmass = ', airmass_str
-    print '1) pwv = ', pwv_str
-    print "1) oz = ", oz_str
-    print '--------------------------------------------'
+    print('--------------------------------------------')
+    print('1) airmass = ', airmass_str)
+    print('1) pwv = ', pwv_str)
+    print("1) oz = ", oz_str)
+    print('--------------------------------------------')
 
     if airmass_str == "":
         usage()
@@ -113,11 +114,11 @@ if __name__ == "__main__":
 
     airmass_num, pwv_num, oz_num = main(sys.argv[1:])
 
-    print '--------------------------------------------'
-    print ' 2) airmass = ', airmass_num
-    print ' 2) pwv = ', pwv_num
-    print ' 2) oz = ', oz_num
-    print '--------------------------------------------'
+    print('--------------------------------------------')
+    print(' 2) airmass = ', airmass_num)
+    print(' 2) pwv = ', pwv_num)
+    print(' 2) oz = ', oz_num)
+    print('--------------------------------------------')
 
     ensure_dir(TOPDIR)
 

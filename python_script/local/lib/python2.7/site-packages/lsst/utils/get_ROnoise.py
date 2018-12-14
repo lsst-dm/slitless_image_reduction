@@ -1,13 +1,15 @@
 #!/usr/bin/env python
+from __future__ import print_function
+from __future__ import absolute_import
 import os
 import sys
 import numpy as np
 import pylab
 import pyfits
 import optparse
-import seg_output as seg
+from . import seg_output as seg
 import poloka.core as pc
-import pixel_utils as pu
+from . import pixel_utils as pu
 
 code_name = "<mask_tearing.py> "
 
@@ -68,7 +70,7 @@ def get_bias(data_dir, ref_string):
 
 
 if __name__ == '__main__':
-    print "from ~/python_script/soft/"
+    print("from ~/python_script/soft/")
     option = read_option()
     data_dir = option.data_dir
     ref_string = option.refname
@@ -115,7 +117,7 @@ if __name__ == '__main__':
 # end 
 """)
 
-    print "nb de colonnes = ", len(nt[0])
+    print("nb de colonnes = ", len(nt[0]))
     for l in nt:
         if None in l:
             continue

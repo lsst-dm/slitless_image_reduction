@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import os
 import sys
 import re
@@ -53,10 +54,10 @@ def get_pairs(data_dir, ref_string):
     set2 = sorted(glob.glob(os.path.join(data_dir, set2)))
 
     if (len(set1) != len(set2)):
-        print "list of flat pairs have unequal length [aborted] !"
+        print("list of flat pairs have unequal length [aborted] !")
         sys.exit()
     for i, j in zip(set1, set2):
         if str(i).replace("1.fits", "") != str(j).replace("2.fits", ""):
-            print "Pairs are not identical [aborted]!"
+            print("Pairs are not identical [aborted]!")
             sys.exit()
     return set1, set2

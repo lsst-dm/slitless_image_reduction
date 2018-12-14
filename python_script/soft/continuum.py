@@ -4,6 +4,7 @@ splines to extract continuum
 Author : Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -31,7 +32,7 @@ def equWidth(wavelength, flux, continuum, list):
     #    Sum += 1- j/k
     #    print "ew = " , Sum
     segment = (list[0]+list[1])/2.
-    print 'pos, EW : ', segment, equ_w
+    print('pos, EW : ', segment, equ_w)
     return segment, equ_w
 
 
@@ -118,13 +119,13 @@ def fromObs(file):
     dec = dict.get('DEC')
     parallactic_angle = tb.ParallacticAngle(latitude, ha, dec)
     parallactic_angle = parallactic_angle[0]
-    print 'parallactic_angle ', parallactic_angle
+    print('parallactic_angle ', parallactic_angle)
     Object = ' '.join(dict.get('OBJECT'))
     jd = dict.get('JD')[0]
     airmass = dict.get('AIRMASS')[0]
     #data = np.array([values.field('w'), values.field('aper_flux')]).transpose()
     data = np.array([values.field('w'), values.field('psf_gauss_flux')]).transpose()
-    print 'flux estimator is Gauss PSF'
+    print('flux estimator is Gauss PSF')
     return data, airmass, Object, jd, parallactic_angle, meanseeing
 
 
@@ -185,7 +186,7 @@ if __name__ == "__main__":
         seeing_y = values.field('psf_gauss_sigma')
         pix2wght = float(dict.get('PIX2WGTH')[0])
         mean_seeing = meanSeeing(seeing_x, seeing_y)
-        print 'MEAN SEEING ', mean_seeing
+        print('MEAN SEEING ', mean_seeing)
 
     wmin = 680.
     wmax = 1200.
@@ -193,7 +194,7 @@ if __name__ == "__main__":
 
     outlist = []
     for file in files:
-        print 'opening ', file
+        print('opening ', file)
         if (inputype == 'obs'):
             data, airmass, Object, jd, parallactic_angle, mean_seeing = fromObs(file)
             water_knots = [[680, 743], [800, 870], [1030, 1050]] # from looking at obs
@@ -220,10 +221,10 @@ if __name__ == "__main__":
         Select  subset of the data
         '''
         if (select == 'jd'):
-            print 'jd, airmass, meanSeeing : ', jd, airmass, mean_seeing
+            print('jd, airmass, meanSeeing : ', jd, airmass, mean_seeing)
             #if((float(jd) < 2458037.5) or (float(jd)>2458039.8)):
             if((float(jd) < 2458038.5) or (float(jd) > 2458039.)): #night 2
-                print 'wrong period for ', file
+                print('wrong period for ', file)
                 continue
 
         '''
@@ -232,7 +233,7 @@ if __name__ == "__main__":
         continuum_w = []
         continuum_f = []
         for k in water_knots:
-            print 'continuum : ', k[0], ' to ', k[1]
+            print('continuum : ', k[0], ' to ', k[1])
             #continuum_w.extend(data[:,0][(data[:,0]>= k-width) & (data[:,0]<= k+width)])
             #continuum_f.extend(data[:,1][(data[:,0]>= k-width) & (data[:,0]<= k+width)])
             continuum_w.extend(data[:, 0][(data[:, 0] >= k[0]) & (data[:, 0] <= k[1])])
@@ -255,10 +256,10 @@ if __name__ == "__main__":
             edges.append(item[1][1])
             edges.append(item[2][0])
         for i in EW:
-            print 'EW : ', i
+            print('EW : ', i)
             #ew_w, ew_f = equWidth(wght, signal, continuum, i) #abrupt version
             ew_w, ew_f = equWidth2(data[:, 0], data[:, 1], i, plot=plot)          #fitted edges
-            print Object, jd, airmass, ew_w, ew_f, mean_seeing
+            print(Object, jd, airmass, ew_w, ew_f, mean_seeing)
 
             outlist.append([Object, jd, airmass, parallactic_angle, ew_w, ew_f, mean_seeing, pwv])
 
@@ -279,4 +280,4 @@ if __name__ == "__main__":
     tb.DumpTuple(names,
                  zip(*outlist),
                  outfile)
-    print 'writing : ', outfile
+    print('writing : ', outfile)

@@ -4,6 +4,7 @@ splines to extract continuum
 Author : Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -28,7 +29,7 @@ def Fit(Lm, Lo, plot=False, **kwargs):
     degree = 2
     if (len(Lm) <= degree):
         degree = int(len(Lm)-1)
-        print "Changed degree to : ", degree
+        print("Changed degree to : ", degree)
 
     fit_coef = np.polyfit(Lo, Lm, deg=degree)
     points = np.linspace(100, 1500, 100)
@@ -49,7 +50,7 @@ def Fit(Lm, Lo, plot=False, **kwargs):
         pl.xlabel('wght (nm)')
         pl.ylabel('residuals')
         pl.show()
-    print 'rms residuals = ', np.std(Lm-dispersion)
+    print('rms residuals = ', np.std(Lm-dispersion))
     return fit_coef, Lm
 
 
@@ -130,13 +131,13 @@ def fromObs(file):
     dec = dict.get('DEC')
     parallactic_angle = tb.ParallacticAngle(latitude, ha, dec)
     parallactic_angle = parallactic_angle[0]
-    print 'parallactic_angle ', parallactic_angle
+    print('parallactic_angle ', parallactic_angle)
     Object = ' '.join(dict.get('OBJECT'))
     jd = dict.get('JD')[0]
     airmass = dict.get('AIRMASS')[0]
     #data = np.array([values.field('w'), values.field('aper_flux')]).transpose()
     data = np.array([values.field('w'), values.field('psf_gauss_flux')]).transpose()
-    print 'flux estimator is Gauss PSF'
+    print('flux estimator is Gauss PSF')
     return data, airmass, Object, jd, parallactic_angle, meanseeing
 
 
@@ -201,11 +202,11 @@ if __name__ == "__main__":
         seeing_y = values.field('psf_gauss_sigma')
         pix2wght = float(dict.get('PIX2WGTH')[0])
         mean_seeing = meanSeeing(seeing_x, seeing_y)
-        print 'MEAN SEEING ', mean_seeing
+        print('MEAN SEEING ', mean_seeing)
 
     outlist = []
     for file in files:
-        print 'opening ', file
+        print('opening ', file)
         if (inputype == 'obs'):
             data, airmass, Object, jd, parallactic_angle, mean_seeing = fromObs(file)
             pwv = 0.
@@ -238,35 +239,35 @@ if __name__ == "__main__":
             minimize = []
             for slide in range(-10, 11, 1):
 
-                print 'EW : ', i, ' slide = ', slide
+                print('EW : ', i, ' slide = ', slide)
                 ew_w, ew_f = equWidth2(data[:, 0], data[:, 1], i,
                                        slide=slide,
                                        plot=False)
-                print ew_w, ew_f
+                print(ew_w, ew_f)
                 minimize.append([slide, ew_w, ew_f])
 
             search = list(map(list, zip(*minimize)))
             MAX = max(search[2])
             for s in minimize:
-                print s
+                print(s)
                 if s[2] == MAX:
                     f_slide = s[0]
                     center = s[1]
 
-            print f_slide, center
+            print(f_slide, center)
 
             ew_w, ew_f = equWidth2(data[:, 0], data[:, 1], i,
                                    slide=f_slide,
                                    plot=plot)
 
-            print ew_w, ew_f
+            print(ew_w, ew_f)
             outlist.append([Object, i[3], jd, airmass, parallactic_angle, ew_w, ew_f, mean_seeing, pwv])
 
         names = ['object', 'expected', 'jd', 'airmass', 'parallactic', 'ew_w', 'ew_f', 'mean_seeing', 'pwv']
         tb.DumpTuple(names,
                      zip(*outlist),
                      outfile)
-        print 'writing : ', outfile
+        print('writing : ', outfile)
 
         ''' Refit the dispersion relation by matching absorption features '''
         ''' between the observation and a template                '''
@@ -293,7 +294,7 @@ if __name__ == "__main__":
         from numpy.lib.recfunctions import append_fields
         z = append_fields(val, 'y', wght_recal)
         outcat = 'test.list'
-        print 'writing ', outcat
+        print('writing ', outcat)
         names = names + ['wght_recal']
-        print 'output entries : ', names
+        print('output entries : ', names)
         tb.DumpTuple(names, zip(*z), outcat)

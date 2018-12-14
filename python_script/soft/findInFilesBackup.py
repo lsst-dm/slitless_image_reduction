@@ -5,6 +5,7 @@ divide QE by CBP transmission
 Author: Augustin Guyonnet
 aguyonnet@fas.harvardedu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -17,9 +18,9 @@ from croaks import NTuple
 if __name__ == "__main__":
     narg = len(sys.argv)
     if narg < 2:
-        print "findInFiles.py [file(s)] -v [value(s)]"
-        print "return files if keywords are in it"
-        print
+        print("findInFiles.py [file(s)] -v [value(s)]")
+        print("return files if keywords are in it")
+        print()
     values = []
     Files = []
     k = 1
@@ -46,16 +47,16 @@ if __name__ == "__main__":
                 break
 
         if (found == nb):
-            print file
+            print(file)
             out.append(file)
 
-    print 'files_list : ', out
+    print('files_list : ', out)
 
     for spectrum in out:
-        print spectrum
+        print(spectrum)
         data = NTuple.fromtxt(spectrum)
         fields = data.dtype.fields.keys()
-        print fields
+        print(fields)
         x = np.array(data[:]['w'])
         y = np.array(data[:]['aper_flux'])
         pl.figure()

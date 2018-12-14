@@ -5,6 +5,7 @@ divide spectra by a spectrum at a reference airmass
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -47,7 +48,7 @@ def getMedian(files, param):
         list.append(float(keys[str(param)]))
     median = np.median(list)
     for i in list:
-        print i
+        print(i)
     return median
 
 
@@ -75,7 +76,7 @@ def grabargs():
 
 
 def extractData(file, inputype):
-    print 'reading ', file
+    print('reading ', file)
     if (inputype == 'obs'):
         [wght, flux], keys = tb.readlist(file, ['w', 'aper_flux'])
         airmass = keys['AIRMASS']
@@ -137,18 +138,18 @@ if __name__ == "__main__":
         Selected a clean range
         '''
         if(airmass >= 2.1):
-            print 'airmass is above 2.1'
+            print('airmass is above 2.1')
             continue
 
         out = np.array([wght, flux]).transpose()
         out = out[(out[:, 0] >= Range[0])]
         out = out[out[:, 0] <= Range[1]]
         if len(out) == 0:
-            print 'trouble : ', file
+            print('trouble : ', file)
             continue
         wght = out[:, 0]
         flux = out[:, 1]/exptime
-        print Object, 'airmass ', airmass, len(wght), wght[0], wght[-1]
+        print(Object, 'airmass ', airmass, len(wght), wght[0], wght[-1])
 
         if(float(airmass) == median_param):
             refW = wght

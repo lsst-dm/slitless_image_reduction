@@ -5,6 +5,7 @@ return overscan profile
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -38,7 +39,7 @@ def extract_profile(footprint, direction):
         footprint = footprint.T
     rows = len(footprint)
     cols = len(footprint[0])
-    print 'rows = ', rows, ' cols = ', cols
+    print('rows = ', rows, ' cols = ', cols)
     for i in range(0, rows):
         rem = footprint[i, :]
         flux = np.mean(rem)

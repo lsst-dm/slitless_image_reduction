@@ -6,6 +6,7 @@ give a raw fitsimage, position of object in it,
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -32,7 +33,7 @@ if __name__ == "__main__":
         airmass = keys['AIRMASS']
         air.append(airmass)
         total.append(sum(flux))
-        print 'airmass : ', airmass
+        print('airmass : ', airmass)
         pl.plot(wgth, flux, color='black')
         #pl.plot(wgth, flux*float(airmass), color='red')
         spl = interp.UnivariateSpline(wgth, flux, s=1000.)

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys
 
 
@@ -14,7 +15,7 @@ def deg2HMS(ra='', dec='', round=False):
         else:
             decS = (abs((dec-deg)*60)-decM)*60
         DEC = '{0}{1} {2} {3}'.format(ds, deg, decM, decS)
-        print "DEC = ", DEC
+        print("DEC = ", DEC)
     if ra:
         if str(ra)[0] == '-':
             rs, ra = '-', abs(ra)
@@ -25,7 +26,7 @@ def deg2HMS(ra='', dec='', round=False):
         else:
             raS = ((((ra/15)-raH)*60)-raM)*60
         RA = '{0}{1} {2} {3}'.format(rs, raH, raM, raS)
-        print "RA = ", RA
+        print("RA = ", RA)
     if ra and dec:
         return (RA, DEC)
     else:

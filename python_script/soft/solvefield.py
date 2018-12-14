@@ -6,6 +6,7 @@ http://docs.astropy.org/en/stable/wcs/
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 #from __future__ import division, print_function
 
 import os
@@ -46,11 +47,11 @@ def runAstrometry(path, image):
     target = os.path.join(path, image)
     cmd = "solve-field %s --downsample 2 --scale-units arcminwidth --scale-low 10. --scale-high 15.0 --fits-image --overwrite --use-sextractor"%(
         target)
-    print cmd
+    print(cmd)
     os.system(cmd)
     remove = str(path+'calibrated-indx.png '+path+'calibrated-ngc.png '+path+'calibrated-objs.png '+path+'calibrated.axy '+path+'calibrated.corr ' +
                  path+'calibrated.match '+path+'calibrated.rdls '+path+'calibrated.solved '+path+'calibrated-indx.xyls ')+path+'calibrated.new '
-    print 'removing : ', remove
+    print('removing : ', remove)
     os.system('rm -f %s' % (remove))
     return
 

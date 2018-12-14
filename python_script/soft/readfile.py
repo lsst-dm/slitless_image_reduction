@@ -11,6 +11,7 @@ recarray doc :
 https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.recarray.html
 
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -53,7 +54,7 @@ if __name__ == "__main__":
             #print 'values : ', dict.values()
             #print 'keys : ', dict.keys()
             #print values.field('wg')
-            print 'Dict : ', dict.items()
-            print 'Array : ', values.field
+            print('Dict : ', dict.items())
+            print('Array : ', values.field)
             pl.plot(values.field('wg'), values.field('tatmo'))
             pl.show()

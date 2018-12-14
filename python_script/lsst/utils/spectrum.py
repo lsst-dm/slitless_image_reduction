@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 
-import telinst as instru
+from __future__ import absolute_import
+#!/usr/bin/env python
+
+from . import telinst as instru
 import os
 import sys
 import astropy.io.fits as pf
 import numpy as np
 from croaks import NTuple
-import toolbox as tb
-import reduceimage as ri
-import extraction as ex
-import flatfield as fd
-import dispersion as disp
-import isr
+from . import toolbox as tb
+from . import reduceimage as ri
+from . import extraction as ex
+from . import flatfield as fd
+from . import dispersion as disp
+from . import isr
 import logging
 logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 

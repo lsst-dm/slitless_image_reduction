@@ -4,6 +4,7 @@ remove flux at f(w) = f(w)-f(w/2)*.01
 Author : Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -29,9 +30,9 @@ if __name__ == "__main__":
         interp[np.isnan(interp)] = 0
         corrected_flux = values.field('psf_GM_flux') - interp
 
-        print 'keys ', values.dtype.fields.keys()
-        print 'values ', values.item(1)
-        print 'values ', values.shape
+        print('keys ', values.dtype.fields.keys())
+        print('values ', values.item(1))
+        print('values ', values.shape)
         outkey = names
         outkey.append('flux_decontaminated')
 
@@ -52,13 +53,13 @@ if __name__ == "__main__":
                     outkey,
                     zip(*out),
                     'test.list')
-        print 'writing : test.list'
+        print('writing : test.list')
 
         if show_stuff:
-            print 'values : ', dict.values()
-            print 'keys : ', dict.keys()
+            print('values : ', dict.values())
+            print('keys : ', dict.keys())
             #print values.field('w')
-            print 'Dict : ', dict.items()
+            print('Dict : ', dict.items())
             #print 'Array : ', values.field
             pl.plot(values.field('w'), values.field('psf_GM_flux'), label='raw flux')
             pl.plot(values.field('w'), corrected_flux, label='corrected')

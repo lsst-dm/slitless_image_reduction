@@ -5,6 +5,7 @@ return plots of spectra
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -76,12 +77,12 @@ class Lines(object):
         spec = self.data
         Iter = 1000
         line = []
-        print 'median over :', size
+        print('median over :', size)
         for i in range(Iter+1):
             smooth = filt.median_filter(spec[:, 1], size=size, mode='nearest')
             error = np.std(spec[:, 1]-smooth)
             if (error == 0.0):
-                print 'residuals of continuum reached 0. Leave iteration'
+                print('residuals of continuum reached 0. Leave iteration')
                 data_continuum = spec
                 break
             data_continuum = spec[(spec[:, 1]-smooth) >= (-3*error)]
@@ -90,18 +91,18 @@ class Lines(object):
             count = Count(line)
             lenremove = len(remove)
             size = int((lendata-len(line))/20)
-            print '(iter, size,  error, removed) = ', i, size, error, count
+            print('(iter, size,  error, removed) = ', i, size, error, count)
 
             if(lenremove == 0):
-                print 'No more point removed after iteration ', i, ' -> break'
+                print('No more point removed after iteration ', i, ' -> break')
                 break
             '''replace the lines data point by the smooth coninuum estimation'''
 
             spec = FillSmooth2(spec, data_continuum)
 
             if (i == Iter):
-                print 'iter limit has been reached'
-                print 'return smoothed continuum out of last data selection'
+                print('iter limit has been reached')
+                print('return smoothed continuum out of last data selection')
                 break
 
         lines = []
@@ -139,12 +140,12 @@ class Lines(object):
                 flux_sum = []
                 wg_sum = []
                 n = 0
-        print 'lines position and flux : '
+        print('lines position and flux : ')
         kept = []
         for i, j, k in zip(wg_lines, flux_lines, sflux_lines):
             if(np.abs(j/k) >= 2):
                 kept.append(i)
-                print i, j, k
+                print(i, j, k)
         self.RefineLines(lines_loc, kept)
         return wg_lines, flux_lines, sflux_lines
 
@@ -164,7 +165,7 @@ class Lines(object):
         lmax = min(dataC[:, 0][(dataC[:, 0] > line) & ((dataC[:, 2] == 1.))])
         max_point = self.Point(dataC, lmax)
         position, flux, sflux = self.Sum(dataC, min_point, max_point)
-        print "position, flux, sflux = ", position, flux, sflux
+        print("position, flux, sflux = ", position, flux, sflux)
         return position, flux
 
     def Point(self, dataC, point):

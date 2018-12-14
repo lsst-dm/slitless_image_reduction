@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import os
 import re
 import numpy as np
@@ -168,10 +169,10 @@ def DumpFile(keys, names, list, file):
     info = np.rec.fromrecords([i for i in list], names=names)
     info = info.view(NTuple)
 
-    print type(keys)
+    print(type(keys))
 
     for key, value in keys.iteritems(): # to remove '' from items
-        print key, value, type(value)
+        print(key, value, type(value))
         if(type(value) == list):
             info.keys[key] = ' '.join(value)
         else:
@@ -212,7 +213,7 @@ def Run(jd):
 
 
 def STDname(name):
-    print 'looking for :', name
+    print('looking for :', name)
     if (name.find('HD205905') >= 0):
         target = 'HD205905'
     elif ((name.lower()).find('hd14943') >= 0):
@@ -235,7 +236,7 @@ def STDname(name):
         target = 'ksi02cet'
     else:
         target = None
-    print 'target = ', target
+    print('target = ', target)
     return target
 
 
@@ -243,7 +244,7 @@ def STDname(name):
 
 
 def ProdInstall(prodpath=None, **kwargs):
-    print 'prodpath  ', prodpath
+    print('prodpath  ', prodpath)
     ''' Load environment variables'''
     #if os.environ.get('PROD_PREFIX') is None :
     if prodpath is None:
@@ -300,7 +301,7 @@ def Seeing(cat, plot):
             #for i,j,k,l,m,n in zip(cutlist.field('NUMBER'),cutlist.field('X_IMAGE'),cutlist.field('Y_IMAGE'), np.sqrt(cutlist.field('X2_IMAGE')), np.sqrt(cutlist.field('Y2_IMAGE')), cutlist.field('FLUX_MAX')):
             #    print i,j,k,l,m,n
 
-            print
+            print()
 
     if plot is True:
         pl.plot(np.sqrt(data.field('X2_IMAGE')), np.sqrt(data.field('Y2_IMAGE')), 'r^')
@@ -373,14 +374,14 @@ def telescope_T(telescope):
     #pl.show()
     #pl.legend()
     #fig.savefig('tel_throughput.pdf')
-    print 'Telescope throughput from : ', file
+    print('Telescope throughput from : ', file)
     return qe[:, 0], qe[:, 1]
 
 
 def ccd_qe():
     file = os.path.join(os.environ['INSTRU_PREFIX'], 'qecurve.txt')
     qe = np.loadtxt(file)
-    print 'QE from : ', file
+    print('QE from : ', file)
     return qe[:, 0], qe[:, 1]
 
 
@@ -399,10 +400,10 @@ def BkgdStatClip(data, control_plot):
     lenX = len(data)
     lenY = len(data[0])
     c, low, up = stats.sigmaclip(data, 5, 2)
-    print 'Lower and upper value included in bkgd : ', low, up
+    print('Lower and upper value included in bkgd : ', low, up)
     mean = np.mean(c)
     sigma = np.std(c)
-    print 'Bkgd mean and sigma = ', mean, sigma
+    print('Bkgd mean and sigma = ', mean, sigma)
     if (control_plot is True):
         check = np.zeros([lenX, lenY])
         check = np.where(((data < up) & (data > low)), 1, 0)
@@ -432,7 +433,7 @@ def RunSEx(image, outdir):
     default = os.path.join(os.environ['SEX_PREFIX'], 'default.sex')
     cmd = "sex -c %s %s  -CATALOG_NAME=%s"%(default, image,
                                             os.path.join(outdir, 'se.list'))
-    print cmd
+    print(cmd)
     os.system(cmd)
     os.system('mv segmentation.fits %s' % (outdir))
     return

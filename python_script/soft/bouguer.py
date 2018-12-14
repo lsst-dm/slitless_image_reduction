@@ -5,6 +5,7 @@ return plots of regression to zero airmass
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -75,7 +76,7 @@ if __name__ == "__main__":
     ax = fig.add_subplot(111, projection='3d')
     i = 1
     for file in files:
-        print 'reading ', file
+        print('reading ', file)
         if (inputype == 'obs'):
             [wght, flux], keys = tb.readlist(file, ['w', 'aper_flux'])
             airmass = keys['AIRMASS']
@@ -89,19 +90,19 @@ if __name__ == "__main__":
         Selected a clean range
         '''
         if(airmass >= 3.1):
-            print 'airmass is above 3.1'
+            print('airmass is above 3.1')
             continue
 
         out = np.array([wght, flux]).transpose()
         out = out[(out[:, 0] >= 350)]
         out = out[out[:, 0] < 1000]
         if len(out) == 0:
-            print 'trouble : ', file
+            print('trouble : ', file)
             continue
         wght = out[:, 0]
         flux = out[:, 1]/exptime
-        print 'exptime : ', exptime
-        print Object, 'airmass ', i, airmass, len(wght), wght[0], wght[-1]
+        print('exptime : ', exptime)
+        print(Object, 'airmass ', i, airmass, len(wght), wght[0], wght[-1])
         airmass = np.ones(len(wght))*airmass
 
         W.append(wght)
@@ -126,7 +127,7 @@ if __name__ == "__main__":
     for w, z, f in zip(W, Z, F):
         flux_interp = interp.griddata(w, f, refW)
         for i, j in zip(refW, flux_interp):
-            print i, j, np.log(j), np.log10(j)
+            print(i, j, np.log(j), np.log10(j))
             interpW.append(i)
             interpZ.append(z[0])
             interpF.append(-2.5*np.log10(j))
@@ -158,7 +159,7 @@ if __name__ == "__main__":
         fit_coef, cov = np.polyfit(airmass, flux, deg=degree, cov=True)
         sigma1 = np.sqrt(cov[0, 0])
         sigma0 = np.sqrt(cov[-1, -1])
-        print wr, 'slope, intercept = ', fit_coef, ' sigma slope = ', sigma1
+        print(wr, 'slope, intercept = ', fit_coef, ' sigma slope = ', sigma1)
         Wreg.append(wr)
         Freg0.append(fit_coef[-1]) #lowest order last
         sFreg0.append(sigma0)
@@ -211,4 +212,4 @@ if __name__ == "__main__":
     tb.DumpTuple(names,
                  outlist,
                  outfile)
-    print 'writing : ', outfile
+    print('writing : ', outfile)

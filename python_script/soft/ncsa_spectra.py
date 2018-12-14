@@ -5,6 +5,7 @@ return plots of equivalent width
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -56,7 +57,7 @@ if __name__ == "__main__":
     for obj in objects:
         for filt in filters:
             colors = iter(cm.rainbow(np.linspace(0, 2, 200)))
-            print obj, filt
+            print(obj, filt)
             fig, axarr = pl.subplots(2, sharex=True)
             nb = 0
             for file in files:
@@ -72,7 +73,7 @@ if __name__ == "__main__":
                     pl.ylabel('aper_flux / psf_flux')
                     pl.xlabel('pixel')
                     title = str(obj)+' ' + str(filt)
-                    print 'title :', title, img
+                    print('title :', title, img)
                     pl.title(title)
                     color = next(colors)
 

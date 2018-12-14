@@ -6,6 +6,7 @@ http://docs.astropy.org/en/stable/wcs/
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 #from __future__ import division, print_function
 
 import os
@@ -52,7 +53,7 @@ if __name__ == "__main__":
     hdulist1 = fits.open(ref)
     w = wcs.WCS(hdulist1[0].header)
     header = w.to_header()
-    print header.values(), header.keys(), header.items()
+    print(header.values(), header.keys(), header.items())
 
     for target in targets:
         hdulist2 = fits.open(target, mode='update')

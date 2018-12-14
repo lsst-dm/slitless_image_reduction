@@ -5,6 +5,7 @@ run sextractror on an image
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -18,14 +19,14 @@ def zeroth(cat):
     data = data[(data.field('X_IMAGE') > 338) & (data.field('X_IMAGE') < 352)]
     data = data[(data.field('Y_IMAGE') > 590) & (data.field('Y_IMAGE') < 610)]
     if(len(data) != 1):
-        print 'WARNING : ', len(data), ' object found '
+        print('WARNING : ', len(data), ' object found ')
     return data
 
 
 def usage():
-    print "look at flux of spot in se.list files"
-    print "Usage: cbpflux.py [files]"
-    print
+    print("look at flux of spot in se.list files")
+    print("Usage: cbpflux.py [files]")
+    print()
     sys.exit(1)
 
 
@@ -44,7 +45,7 @@ if __name__ == "__main__":
         filters = pf.open(fits)[0].header.get('FILTERS')
         comments = str(pf.open(fits)[0].header.get('COMMENT'))
         wght = comments.split("WAVE")[1].split(" ")[1]
-        print fits, 'wght = ', wght
+        print(fits, 'wght = ', wght)
         obj = zeroth(file)
         if (len(obj) != 1):
             continue

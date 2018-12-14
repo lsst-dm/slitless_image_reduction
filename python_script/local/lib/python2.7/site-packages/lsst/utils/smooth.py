@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+from __future__ import absolute_import
 import os
 import sys
 import re
@@ -10,7 +12,7 @@ import re
 import logging
 import scipy.ndimage.filters as filt
 import scipy.interpolate as interp
-import toolbox as tb
+from . import toolbox as tb
 
 '''
 Smooth data array with seeing array
@@ -44,9 +46,9 @@ class smooth(object):
         self.init(unit)
 
     def init(self, unit):
-        print 'unit is in ', unit
+        print('unit is in ', unit)
         self.step = float(self.wgth[1] - self.wgth[0])
-        print 'step = ', self.step, unit
+        print('step = ', self.step, unit)
 
     '''fit a parabolic profile from sigma(in pixel) VS wght data'''
 

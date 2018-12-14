@@ -5,6 +5,7 @@ return the median horizontal profile of a frame
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -37,7 +38,7 @@ def extract_profile(footprint, mask, direction):
         mask = mask.T
     rows = len(footprint)
     cols = len(footprint[0])
-    print 'rows = ', rows, ' cols = ', cols
+    print('rows = ', rows, ' cols = ', cols)
     for i in range(0, rows):
         keep = footprint[i, :]
         remo = mask[i, :]

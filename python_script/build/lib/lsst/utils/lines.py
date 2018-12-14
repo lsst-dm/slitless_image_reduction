@@ -6,6 +6,8 @@ give an array with wavelength and flux,
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
+from __future__ import absolute_import
 
 
 import os
@@ -13,7 +15,7 @@ import sys
 import re
 import numpy as np
 import pylab as pl
-import toolbox as tb
+from . import toolbox as tb
 import croaks
 import scipy.interpolate as interp
 import scipy.ndimage.filters as filt
@@ -100,15 +102,15 @@ class Lines(object):
                           " "+str(size)+" "+str(error)+" "+str(lenremove))
 
             if(lenremove == 0):
-                print 'No more point removed after iteration ', i, ' -> break'
+                print('No more point removed after iteration ', i, ' -> break')
                 break
             '''replace the lines data point by the smooth coninuum estimation'''
 
             spec = FillSmooth2(spec, data_continuum)
 
             if (i == Iter):
-                print 'iter limit has been reached'
-                print 'return smoothed continuum out of last data selection'
+                print('iter limit has been reached')
+                print('return smoothed continuum out of last data selection')
                 break
 
         lines = []
@@ -179,7 +181,7 @@ class Lines(object):
         lmax = min(dataC[:, 0][(dataC[:, 0] > line) & ((dataC[:, 2] == 1.))])
         max_point = self.Point(dataC, lmax)
         position, flux, sflux = self.Sum(dataC, min_point, max_point)
-        print "position, flux, sflux = ", position, flux, sflux
+        print("position, flux, sflux = ", position, flux, sflux)
         return position, flux, sflux
 
     def Point(self, dataC, point):

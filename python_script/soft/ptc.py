@@ -5,6 +5,7 @@ analyze ptc
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 
 import os
@@ -96,7 +97,7 @@ if __name__ == '__main__':
 
     number = 1
     for refname1, refname2 in zip(img1, img2):
-        print refname1, refname2
+        print(refname1, refname2)
         inst = instru.telinst(refname1)
         exptime = inst.header.get('EXPTIME')
         data1 = inst.Image(refname1)
@@ -108,7 +109,7 @@ if __name__ == '__main__':
         info = "Image is a stack of :" + refname1 + refname2
         hdr.add_comment(info)
         outim = 'img'+str(number)+'.fits'
-        print 'outimg ', outim, ' exptime = ', exptime
+        print('outimg ', outim, ' exptime = ', exptime)
         pf.writeto(outim, diff, hdr, overwrite=True)
         number += 1
         for amp in inst.amp:
@@ -119,7 +120,7 @@ if __name__ == '__main__':
             masked_sum = Clip(mask1 + mask2)
             diff_mean = np.mean(masked_diff)
             diff_rms = np.std(masked_diff)
-            print 'amp, diff_mean diff_std = ', amp, diff_mean, diff_rms
+            print('amp, diff_mean diff_std = ', amp, diff_mean, diff_rms)
             sum_mean = np.mean(masked_sum)
             sum_rms = np.std(masked_sum)
             out.write('%i %i %f %f %f %f\n' %

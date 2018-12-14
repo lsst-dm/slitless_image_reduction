@@ -5,6 +5,7 @@ Plot simulated atmospheric transparency
 Author: Augustin Guyonnet
 aguyonnet@harvard.fas.edu
 '''
+from __future__ import print_function
 
 import sys
 
@@ -17,9 +18,9 @@ from matplotlib.animation import FuncAnimation
 
 
 def usage():
-    print "Usage: plot_from_fitstable the simulated atmospheric transmission"
-    print "Return a plot of the transmission"
-    print
+    print("Usage: plot_from_fitstable the simulated atmospheric transmission")
+    print("Return a plot of the transmission")
+    print()
 
 
 #  column 0 : count number
@@ -47,7 +48,7 @@ def animate(i, data, line):
     pl.xlabel('wavelength (nm)')
     pl.ylabel('Atmospheric transmission')
     pl.legend()
-    print 'anim ', i
+    print('anim ', i)
     return line,
 
 
@@ -69,7 +70,7 @@ def TableFromFits(Fits):
             out.append(item)
             if plot:
                 pl.clf()
-                print i, item[:10]
+                print(i, item[:10])
                 pl.plot(data[0, 6:], item[6:], label='time '+str(i))
                 pl.text(500, 0.3,
                         'Aerosol %s' % (str(item[1])), color='red', fontsize=10)
@@ -82,7 +83,7 @@ def TableFromFits(Fits):
 
     if plot:
         pl.show()
-    print data[0, :]
+    print(data[0, :])
 
     out = np.array(out)
     return out, data[0, :]
@@ -93,15 +94,15 @@ if __name__ == "__main__":
     Writer = animation.writers['ffmpeg']
     name = 'ref'
     fits = sys.argv[1]
-    print fits
+    print(fits)
     out, wght = TableFromFits(fits)
-    print 'out ', out[0, :6]
+    print('out ', out[0, :6])
 
     #pl.plot(wght[6:], out[0,6:])
     #pl.show()
 
     frames = len(out[:, 0])
-    print 'nb of frames ', frames
+    print('nb of frames ', frames)
 
     fig, ax = pl.subplots()
     line = ax.plot([], [])
@@ -113,8 +114,8 @@ if __name__ == "__main__":
 
     #pl.show()
     outname = "datachallenge"
-    print 'writing movie : ', outname
+    print('writing movie : ', outname)
     writer = Writer(fps=2, metadata=dict(artist='Me'), bitrate=10800)
     anim.save(outname+'.mp4', writer=writer)
 
-    print 'pf'
+    print('pf')

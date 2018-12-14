@@ -6,6 +6,7 @@
 # With a pure absorbing atmosphere
 # Here we vary PWV
 #################################################################
+from __future__ import print_function
 import os
 import re
 import math
@@ -35,11 +36,11 @@ def ensure_dir(f):
 
 
 def usage():
-    print "*******************************************************************"
-    print sys.argv[0], ' -z <airmass> -w <pwv> -o <oz>'
-    print 'Number of arguments:', len(sys.argv), 'arguments.'
-    print 'Argument List:', str(sys.argv)
-    print "*******************************************************************"
+    print("*******************************************************************")
+    print(sys.argv[0], ' -z <airmass> -w <pwv> -o <oz>')
+    print('Number of arguments:', len(sys.argv), 'arguments.')
+    print('Argument List:', str(sys.argv))
+    print("*******************************************************************")
 
 
 def model(model='baseline', **kwargs):
@@ -113,7 +114,7 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "hz:w:o:", ["am=", "pwv=", "oz="])
     except getopt.GetoptError:
-        print 'test.py -z <airmass> -w <pwv> -o <oz>'
+        print('test.py -z <airmass> -w <pwv> -o <oz>')
         sys.exit(2)
 
     for opt, arg in opts:
@@ -147,11 +148,11 @@ if __name__ == "__main__":
 
     airmass_num, pwv_num, oz_num = main(sys.argv[1:])
 
-    print '--------------------------------------------'
-    print ' 2) airmass = ', airmass_num
-    print ' 2) pwv = ', pwv_num
-    print ' 2) oz = ', oz_num
-    print '--------------------------------------------'
+    print('--------------------------------------------')
+    print(' 2) airmass = ', airmass_num)
+    print(' 2) pwv = ', pwv_num)
+    print(' 2) oz = ', oz_num)
+    print('--------------------------------------------')
 
     # manage input and output directories
     TOPDIR2 = TOPDIR
@@ -179,7 +180,7 @@ if __name__ == "__main__":
     sza = math.acos(1./airmass)*180./math.pi
 
     params = model(model='best')
-    print params
+    print(params)
 
     BaseFilename = 'RT_LS_pp_tp_sa_rt_z'+str(amfileindex)\
         + '_'+WVXX+str(wvfileindex)\
@@ -193,12 +194,12 @@ if __name__ == "__main__":
 
     verbose = True
     if verbose:
-        print("Running uvspec with input file: ", inp)
-        print("Output to file                : ", out)
+        print(("Running uvspec with input file: ", inp))
+        print(("Output to file                : ", out))
 
     cmd = libradtranpath+'bin/uvspec ' + ' < ' + inp + ' > ' + out
 
     if verbose:
-        print("uvspec cmd: ", cmd)
+        print(("uvspec cmd: ", cmd))
     p = Popen(cmd, shell=True, stdout=PIPE)
     p.wait()

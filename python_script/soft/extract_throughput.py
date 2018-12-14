@@ -6,6 +6,7 @@ return a QE*optical throughput curve
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -20,12 +21,12 @@ from croaks import NTuple
 
 
 def usage():
-    print 'extract_throughput.py [file]'
-    print "file is a list of fitsimages and their associated Iph files"
-    print "from monochromatic fitsimages and monitoring photodiode files,"
-    print "return a QE*optical throughput curve"
-    print "add [Plot] to see check plots: "
-    print
+    print('extract_throughput.py [file]')
+    print("file is a list of fitsimages and their associated Iph files")
+    print("from monochromatic fitsimages and monitoring photodiode files,")
+    print("return a QE*optical throughput curve")
+    print("add [Plot] to see check plots: ")
+    print()
 
 
 def readfile(inputfile, dic=[]):
@@ -56,7 +57,7 @@ def SubtractDark(data, exptime, darkfilename):
     scaling = exptimedark / exptime
     arr = darkframe.Image(darkfilename)
     data -= (arr * scaling)
-    print 'dark :', darkfilename, ' scaling factor = ', scaling
+    print('dark :', darkfilename, ' scaling factor = ', scaling)
     return data
 
 
@@ -74,7 +75,7 @@ def FluxInAmp(amp, data, plot=False, **kwargs):
     pix = (frame).flatten()
     fact = 5
     pix2, low, upp = stats.sigmaclip(pix, fact, fact)
-    print 'len pix = ', len(pix), ', len pix2 = ', len(pix2)
+    print('len pix = ', len(pix), ', len pix2 = ', len(pix2))
     if(plot == True):
         pl.hist(pix, histtype='bar', log=True, range=(-4000, 4000), bins=100, color='green', label='trial')
         pl.hist(pix2, histtype='bar', log=True, range=(-4000, 4000), bins=100, color='crimson', label='trial')
@@ -86,7 +87,7 @@ def FluxInAmp(amp, data, plot=False, **kwargs):
     '''Flag clipped pixels'''
 
     np.clip(frame, low, upp, out=data[list[0]:list[1], list[2]:list[3]])
-    print 'minmax outimage : ', np.amax(data[list[0]:list[1], list[2]:list[3]]), np.amin(data[list[0]:list[1], list[2]:list[3]])
+    print('minmax outimage : ', np.amax(data[list[0]:list[1], list[2]:list[3]]), np.amin(data[list[0]:list[1], list[2]:list[3]]))
 
     return mean, smean, low, upp
 
@@ -133,27 +134,27 @@ if __name__ == "__main__":
 
     for li in zip(*list):
         ronchi, fits, file, inst, data, img, object, exptime, filters, fileD = initialize(li)
-        print 'Processing : ', fits
-        print filters
+        print('Processing : ', fits)
+        print(filters)
         if not (filters.find('ronchi')): # to distinguish datasets
-            print 'ronchi in path -> 1'
+            print('ronchi in path -> 1')
             ronchi = 1  # if ronchi is in
 
         '''Subtract dark'''
         if (dark == True):
-            print 'dark=true'
+            print('dark=true')
             data = SubtractDark(data, exptime, li[2])
 
         ''' get Amp*exptime from Img and its associated dark'''
         iph, siph, wavelength = Iph(file)
         Diph, Dsiph, Dwavelength = Iph(fileD)
 
-        print 'Img and Dark Photocurrents : ', iph, siph, wavelength, Diph, Dsiph, Dwavelength
+        print('Img and Dark Photocurrents : ', iph, siph, wavelength, Diph, Dsiph, Dwavelength)
 
         '''Subtract dark current '''
         iph = iph - Diph
         siph = np.sqrt(siph*siph + Dsiph*Dsiph)
-        print 'Iph dark subtracted : ', iph, siph
+        print('Iph dark subtracted : ', iph, siph)
 
         if(WriteFits == True):
             hdr = (inst.header).copy()
@@ -166,7 +167,7 @@ if __name__ == "__main__":
         for amp in inst.amp:
             mean, smean, low, high = FluxInAmp(amp, data, plot=Plot)
             result.append([wavelength, ronchi, amp, mean, smean, iph, siph, exptime])
-            print 'wavelength, ronchi, amp, mean, smean, Iph, sIph, exptime ', wavelength, ronchi, amp, mean, smean, iph, siph, exptime
+            print('wavelength, ronchi, amp, mean, smean, Iph, sIph, exptime ', wavelength, ronchi, amp, mean, smean, iph, siph, exptime)
             if(WriteFits == True):
                 hdr.set('LOW'+amp, low, 'Pix min value after 5s clipping for the amp')
                 hdr.set('HIGH'+amp, high, 'Pix max value after 5s clipping for the amp')

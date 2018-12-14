@@ -6,6 +6,7 @@ give a raw fitsimage, position of object in it,
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -37,7 +38,7 @@ class FindSpot(object):
                 objs.append(words)
         fp.close()
         info = np.rec.fromrecords(np.array(objs, dtype=float), names=keys)
-        print 'data in ', cat, keys
+        print('data in ', cat, keys)
         return info
 
     '''Use output catalog of Sextractor to find the brighter rounder object'''
@@ -45,7 +46,7 @@ class FindSpot(object):
     def Position(self):
         default = os.path.join('/Users/lpnhe/harvard/atmosx_git/data', 'defaultPS.sex')
         cmd = "sex -c %s %s  -CATALOG_NAME=se.list "%(default, self.img)
-        print cmd
+        print(cmd)
         os.system(cmd)
         info = self.ParseSexCat('se.list')
 
@@ -55,8 +56,8 @@ class FindSpot(object):
                     & (np.sqrt(info.field('X2_IMAGE')) / np.sqrt(info.field('Y2_IMAGE')) > .83)]
         info = info[(np.sqrt(info.field('X2_IMAGE')) * np.sqrt(info.field('Y2_IMAGE')))
                     == max(np.sqrt(info.field('X2_IMAGE')) * np.sqrt(info.field('Y2_IMAGE')))]
-        print 'Object bkgd and flux in pixel maximum :',\
-            info.field('BACKGROUND')[0], info.field('FLUX_MAX')[0]
+        print('Object bkgd and flux in pixel maximum :',\
+            info.field('BACKGROUND')[0], info.field('FLUX_MAX')[0])
         return info.field('X_IMAGE')[0], info.field('Y_IMAGE')[0]
 
 
@@ -76,7 +77,7 @@ if __name__ == "__main__":
     narg = len(sys.argv)
     args = grabargs()
     image = args.img
-    print 'Find spot on image : ', image
+    print('Find spot on image : ', image)
     spot = FindSpot(image)
     x_object, y_object = spot.Position()
-    print 'x_object, y_object = ', x_object, y_object
+    print('x_object, y_object = ', x_object, y_object)

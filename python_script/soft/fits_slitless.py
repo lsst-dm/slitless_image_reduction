@@ -5,6 +5,7 @@ Test code for spectra extraction of slitless data
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 import astropy.io.fits as pf
 import numpy as np
 import os
@@ -33,7 +34,7 @@ def extract_table(footprint, x_start, x_end, y_start, y_end, saturation):
             X.append(i)
             Y.append(flux)
         else:
-            print 'line ', i, ' is > 0.9* saturation'
+            print('line ', i, ' is > 0.9* saturation')
     return X, Y
 
 
@@ -57,11 +58,11 @@ def graph(X, Y, Color='r', Linestyle='-', Name='raw.pdf', **kwargs):
 
 
 def result(image, xini, xfin, yini, yfin):
-    print ' Opening of image ', image
+    print(' Opening of image ', image)
     f = pf.open(image)
     head = f[0].header
     detsec22 = head['ADSEC22']
-    print 'detsec22', detsec22
+    print('detsec22', detsec22)
 
     #f.info()
     name = head['OBJECT'] + head['RECID'] + '.pdf'
@@ -100,9 +101,9 @@ def result(image, xini, xfin, yini, yfin):
     fig2 = pl.figure(2)
     saturation = np.max(pix)*0.9
     pix = pix[pix < saturation]
-    print 'number of pixels = ', len(pix)
+    print('number of pixels = ', len(pix))
     mea = 'mean = ' + str(np.mean(pix))
-    print mea
+    print(mea)
     pl.hist(pix, log=True, range=(0, 40), histtype='bar', bins=100, color='crimson', label='trial')
     pl.show()
     pl.title('Master-dark residuals')

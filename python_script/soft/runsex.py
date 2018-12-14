@@ -5,6 +5,7 @@ run sextractror on an image
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -12,9 +13,9 @@ import toolbox as tb
 
 
 def usage():
-    print "run SExtractor on image and put it in outdir"
-    print "Usage: runsex.py [outdir] [images]"
-    print
+    print("run SExtractor on image and put it in outdir")
+    print("Usage: runsex.py [outdir] [images]")
+    print()
     sys.exit(1)
 
 

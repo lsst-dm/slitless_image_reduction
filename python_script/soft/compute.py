@@ -5,6 +5,7 @@ Compute im1 (-,/,*) coeff* im2
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -13,8 +14,8 @@ import numpy as np
 
 
 def usage():
-    print "Usage: Compute.py [image1] [+,/,*] [coeff] * [image2] [result_image]"
-    print
+    print("Usage: Compute.py [image1] [+,/,*] [coeff] * [image2] [result_image]")
+    print()
     sys.exit(1)
 
 

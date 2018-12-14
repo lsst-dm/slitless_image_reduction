@@ -5,6 +5,7 @@ Given a seeing, find cosmics in fits images
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -21,10 +22,10 @@ def BkgdStat(data, control_plot):
     lenX = len(data)
     lenY = len(data[0])
     c, low, up = stats.sigmaclip(data, 5, 3)
-    print 'Lower and upper value included in bkgd : ', low, up
+    print('Lower and upper value included in bkgd : ', low, up)
     mean = np.mean(c)
     sigma = np.std(c)
-    print 'Bkgd mean and sigma = ', mean, sigma
+    print('Bkgd mean and sigma = ', mean, sigma)
     if (control_plot is True):
         check = np.zeros([lenX, lenY])
         check = np.where(((data < up) & (data > low)), 1, 0)
@@ -56,14 +57,14 @@ class filters(object):
         count = 1000000
         lenX = len(data)
         lenY = len(data[0])
-        print 'x_size, y_size : ', lenX, lenY
+        print('x_size, y_size : ', lenX, lenY)
         mean, sigma = BkgdStat(data, self.control_plot)
         CosmicImage = np.zeros([lenX, lenY])
         total = 0
         while ((count) and (Iter < 5)):
-            print " Iter ", Iter+1
+            print(" Iter ", Iter+1)
             count = self.LaplacianFilter(sigma, mean, seeing, data, CosmicImage)
-            print " Number of cosmic found ", count
+            print(" Number of cosmic found ", count)
             total += count
             Iter += 1
 
@@ -138,7 +139,7 @@ if __name__ == "__main__":
     control_plot = args.plot
     image = args.img
     frame = args.frame
-    print frame
+    print(frame)
     cosmics = filters(image, control_plot=control_plot)
     seeing = 0.7
     cosmics.Cosmics(seeing, frame=frame)

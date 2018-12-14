@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+from __future__ import absolute_import
 import os
 import sys
 import re
@@ -10,7 +12,7 @@ import re
 import logging
 import scipy.ndimage.filters as filt
 import scipy.interpolate as interp
-import toolbox as tb
+from . import toolbox as tb
 
 # ===========================================================
 
@@ -27,7 +29,7 @@ def MoffatFit(pixels, projected_footprint, A, mu, sigma):
     start = psf.x_0 - 5 * psf.gamma
     end = psf.x_0 + 5 * psf.gamma
     integral = (integrate.quad(lambda pixels: psf(pixels), start, end))[0]
-    print "psf_moffat = ", integral, psf.x_0, psf.gamma
+    print("psf_moffat = ", integral, psf.x_0, psf.gamma)
 
     ''' begin Control plot'''
     pl.plot(pixels, psf(pixels), label='Fitted data')

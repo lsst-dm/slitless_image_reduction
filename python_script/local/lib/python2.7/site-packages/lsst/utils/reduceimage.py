@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+from __future__ import absolute_import
 import os
 import sys
 import re
-import telinst as instru
+from . import telinst as instru
 import numpy as np
 import pylab as pl
-import spectrum
+from . import spectrum
 import astropy.io.fits as pf
 import logging
-import toolbox as tb
+from . import toolbox as tb
 import logging
 
 
@@ -100,7 +102,7 @@ class Prepare(object):
                 os.system(cmd)
                 os.remove(os.path.join(self.outdir, self.filename))
             else:
-                print 'no masterdark/bias found for this run'
+                print('no masterdark/bias found for this run')
                 os.rename(self.outname, calibrated)
         else:
             os.rename(self.outname, calibrated)
@@ -112,7 +114,7 @@ class Prepare(object):
     def Flat(self):
         name = re.split('/', self.outdir)[-2:]
         name = str(name[0])+'_'+str(name[1])+'.fits'
-        print 'name : ', name
+        print('name : ', name)
 
         calibratedIn = os.path.join(self.outdir, 'calibrated.fits')
         calibratedOut = calibratedIn#os.path.join(self.outdir, name)
@@ -120,7 +122,7 @@ class Prepare(object):
         logging.info('filter '+filt)
         if (filt.find('CBPG') >= 0):
             master_flat = None
-            print 'currently not using CBPG masterflat because gradient is much higher than in actual sky images'
+            print('currently not using CBPG masterflat because gradient is much higher than in actual sky images')
             #master_flat = os.path.join(os.environ['MASTER_PREFIX'],\
             #                       'master_g_2017_10.fits')
         elif (filt.find('r') >= 0):
@@ -136,7 +138,7 @@ class Prepare(object):
             logging.info(cmd)
             os.system(cmd)
         else:
-            print 'no masterflat found for this image'
+            print('no masterflat found for this image')
         return name
 
     '''Use output catalog of Sextractor to find the brighter rounder object'''
@@ -158,7 +160,7 @@ class Prepare(object):
         default = os.path.join(os.environ['SEX_PREFIX'], 'default.sex')
         cmd = "sex -c %s %s  -CATALOG_NAME=%s"%(default, image,
                                                 os.path.join(self.outdir, 'se.list'))
-        print cmd
+        print(cmd)
         os.system(cmd)
         os.system('mv segmentation.fits %s' % (self.outdir))
         return
@@ -313,9 +315,9 @@ class filters(object):
         logging.info('Looking for cosmics with (Seeing, BkgdMean, BkgdSigma) = '
                      + str(seeing)+' ' + str(mean) + ' ' + str(sigma))
         while ((count) and (Iter < 5)):
-            print " Iter ", Iter+1
+            print(" Iter ", Iter+1)
             count = self.LaplacianFilter(sigma, mean, seeing, data, CosmicImage)
-            print " Number of cosmic found ", count
+            print(" Number of cosmic found ", count)
             total += count
             Iter += 1
         return CosmicImage
@@ -334,14 +336,14 @@ class filters(object):
         count = 1000000
         lenX = len(data)
         lenY = len(data[0])
-        print 'x_size, y_size : ', lenX, lenY
+        print('x_size, y_size : ', lenX, lenY)
         mean, sigma = tb.BkgdStatClip(data, self.plot)
         CosmicImage = np.zeros([lenX, lenY])
         total = 0
         while ((count) and (Iter < 5)):
-            print " Iter ", Iter+1
+            print(" Iter ", Iter+1)
             count = self.LaplacianFilter(sigma, mean, seeing, data, CosmicImage)
-            print " Number of cosmic found ", count
+            print(" Number of cosmic found ", count)
             total += count
             Iter += 1
 

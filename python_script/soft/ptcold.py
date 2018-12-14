@@ -5,6 +5,7 @@ analyze ptc
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 
 import os
@@ -29,10 +30,7 @@ code_name = "<mask_tearing.py> "
 
 def read_option():
     usage = "usage: [%prog] [options]\n"
-    usage += "mask bad pixels and return pixel correlation on a different of 2 flatfields with same ill
-
-
-umination time"
+    usage += "mask bad pixels and return pixel correlation on a different of 2 flatfields with same illumination time"
 
     parser = optparse.OptionParser(usage=usage)
 
@@ -87,10 +85,10 @@ def get_pairs(data_dir, ref_string):
     set2 = sorted(glob.glob(os.path.join(data_dir, set2)))
 
     if (len(set1) != len(set2)):
-        print "list of flat pairs have inequal length !"
+        print("list of flat pairs have inequal length !")
         sys.exit()
     for i, j in zip(set1, set2):
-        print i, j
+        print(i, j)
 #        if str(i).replace("1.fits", "") != str(j).replace("2.fits", ""):
 #            print "Pairs are not identical !"
 #            sys.exit()
@@ -147,7 +145,6 @@ if __name__ == '__main__':
             mean_im1 = bf.PyCintex.gbl.get_mean_Mask(img_and_masks1[0], img_and_masks1[1])
             mean_im2 = bf.PyCintex.gbl.get_mean_Mask(img_and_masks2[0], img_and_masks2[1])
             ### Mean img2 is renormalized on mean im1, and then use (mean_im1 - p1) as flux ref
- !!!
             ### If renormalized, careful before measuring the gain, 
             ### the coef 2 is no longer valide but becomes (1+alpha^2)  !!!         
             if renorm:
@@ -215,11 +212,10 @@ if __name__ == '__main__':
 # end 
 """)
     
-    print "nb de colonnes = " , len(nt[0])
+    print("nb de colonnes = " , len(nt[0]))
     for l in nt:
         if None in l:
             continue
-        out.write('%i %f %i %i %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f 
-%f %f %f %f %f %f %f %f %f\n' % l)
+        out.write('%i %f %i %i %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n' % l)
     out.close()
 

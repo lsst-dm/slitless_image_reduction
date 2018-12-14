@@ -5,6 +5,7 @@ from a raw fitsimage return a spectrum
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -112,11 +113,11 @@ if __name__ == "__main__":
 
         '''flatfielding'''
         name = prepare.Flat()
-        print name
+        print(name)
         #prepare.RunSEx(os.path.join(prepare.outdir, name))
         prepare.RunSEx(os.path.join(prepare.outdir, 'calibrated.fits'))
         logging.info('written in : ' + prepare.outdir)
 
         if plot:
-            print 'show plots'
+            print('show plots')
             pl.show()

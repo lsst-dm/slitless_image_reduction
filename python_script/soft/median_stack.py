@@ -5,6 +5,7 @@ return a trim, overscan subtracted image from a list of raw images
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -14,9 +15,9 @@ import telinst as instru
 
 
 def usage():
-    print "return a trim, overscan subtracted image from a list of raw images"
-    print "Usage: median_stack.py [result_image_name] [list_of_images]"
-    print
+    print("return a trim, overscan subtracted image from a list of raw images")
+    print("Usage: median_stack.py [result_image_name] [list_of_images]")
+    print()
     sys.exit(1)
 
 
@@ -28,7 +29,7 @@ if __name__ == "__main__":
     inputlist = sys.argv[2:]
     datas = []
     for img in inputlist:
-        print 'opening ', img
+        print('opening ', img)
         inst = instru.telinst(img)
         data = inst.Image(img)
         outimg = inst.OverscanSubtract_andTrim(data)

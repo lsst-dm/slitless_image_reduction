@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import os
 import sys
 import numpy as np
@@ -68,7 +69,7 @@ def get_bias(data_dir, ref_string):
 
 
 if __name__ == '__main__':
-    print "from ~/python_script/soft/"
+    print("from ~/python_script/soft/")
     option = read_option()
     data_dir = option.data_dir
     ref_string = option.refname
@@ -115,7 +116,7 @@ if __name__ == '__main__':
 # end 
 """)
 
-    print "nb de colonnes = ", len(nt[0])
+    print("nb de colonnes = ", len(nt[0]))
     for l in nt:
         if None in l:
             continue

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import os
 import sys
 import re
@@ -69,7 +70,7 @@ class fit_gains(object):
         del reject_pix[:]
         del residu[:]
 
-        print 'self.xmax', self.xmax
+        print('self.xmax', self.xmax)
         for i, j, k, l in aa:
             if (i <= self.xmax):
                 meanflat.append(i)
@@ -112,7 +113,7 @@ class fit_gains(object):
         #fitquad = pl.polyval(2*meanflat, meanflat)
         meanflat = np.sort(meanflat)
         ratio = (((g*2E4) - (a*(2E4*g)*(2E4*g) + b*(2E4*g) + c)) / (a*(2E4*g)*(2E4*g) + b*(2E4*g) + c))
-        print "gain = ", g, " khi2/NdF = ", KN, " ratio = ", ratio
+        print("gain = ", g, " khi2/NdF = ", KN, " ratio = ", ratio)
         if (ampli <= 7): ## various checks
             pl.plot(meanflat, a*meanflat*meanflat + b*meanflat + c, 'r')
             #pl.plot(meanflat,b*meanflat + c,'b')

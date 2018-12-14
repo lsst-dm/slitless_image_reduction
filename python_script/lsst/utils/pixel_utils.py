@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import os
 import numpy as np
 import poloka.core as pc
@@ -82,10 +83,10 @@ class Rxx_flat(object):
             extheader['DETSIZE'] = '[1:4336,1:4044]'
         else:
             extheader['DETSEC'] = '[{}:{},{}]'.format(si, sf, pdet)
-        print 'DETSEC ', extheader['DETSEC']
-        print 'DATASEC ', extheader['DATASEC']
-        print 'BIASSEC ', extheader['BIASSEC']
-        print 'DETSIZE ', extheader['DETSIZE']
+        print('DETSEC ', extheader['DETSEC'])
+        print('DATASEC ', extheader['DATASEC'])
+        print('BIASSEC ', extheader['BIASSEC'])
+        print('DETSIZE ', extheader['DETSIZE'])
 
     def correct_Sec_Subaru(self, extheader):
         extheader['DETSIZE'] = '[1:2048,1:4177]'
@@ -177,7 +178,7 @@ class Rxx_flat(object):
 
         self.reftime = self.get_reftime((pyfits.open(infile))[0].header)
         if(self.device == 'LapinDeJade'):
-            print "Device is LapinDeJade"
+            print("Device is LapinDeJade")
             self.std_keywords(hdr)
             append_header_fromfile(hdr)
         if(self.device == 'Subaru'):

@@ -5,6 +5,7 @@ Test code for spectra extraction of slitless data
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 import astropy.io.fits as pf
 import numpy as np
 import os
@@ -34,7 +35,7 @@ def extract_table(footprint, x_start, x_end, y_start, y_end, saturation):
             X.append(i)
             Y.append(flux)
         else:
-            print 'line ', i, ' is > 0.9* saturation'
+            print('line ', i, ' is > 0.9* saturation')
     return X, Y
 
 
@@ -59,7 +60,7 @@ def graph(X, Y, Color='r', Linestyle='-', Name='raw.pdf', **kwargs):
 
 
 def result(image):
-    print ' Opening of image ', image
+    print(' Opening of image ', image)
     f = pf.open(image)
     head = f[0].header
     #f.info()

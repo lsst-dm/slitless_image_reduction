@@ -5,6 +5,7 @@ trim illu section in fitsimage and subtract overscan
 Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -16,10 +17,10 @@ import telinst as instru
 
 
 def usage():
-    print 'Return a trimmed an overscan subtracted image'
-    print "header.py [-r outputrep] (images)"
-    print "If no -r, output is local rep. outname is 'trim_'+img_name "
-    print
+    print('Return a trimmed an overscan subtracted image')
+    print("header.py [-r outputrep] (images)")
+    print("If no -r, output is local rep. outname is 'trim_'+img_name ")
+    print()
 
 
 if __name__ == "__main__":

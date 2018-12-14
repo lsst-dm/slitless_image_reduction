@@ -11,6 +11,7 @@ recarray doc :
 https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.recarray.html
 
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -62,6 +63,6 @@ if __name__ == "__main__":
 
         data = np.array(values)
         outcat = file
-        print 'writing ', outcat
-        print 'output entries : ', columns
+        print('writing ', outcat)
+        print('output entries : ', columns)
         tb.DumpTuple(columns, zip(*data), outcat)

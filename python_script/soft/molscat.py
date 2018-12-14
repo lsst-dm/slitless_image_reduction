@@ -4,6 +4,7 @@ splines to extract continuum
 Author : Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -44,7 +45,7 @@ def fromObs(file, colname):
     dec = dict.get('DEC')
     parallactic_angle = tb.ParallacticAngle(latitude, ha, dec)
     parallactic_angle = parallactic_angle[0]
-    print parallactic_angle
+    print(parallactic_angle)
     jd = ' '.join(dict.get('OBJECT'))
     Object = dict.get('JD')[0]
     airmass = dict.get('AIRMASS')[0]
@@ -101,7 +102,7 @@ if __name__ == "__main__":
 
     outlist = []
     for file in files:
-        print 'opening ', file
+        print('opening ', file)
         if (inputype == 'obs'):
             data, airmass, Object, jd, parallactic_angle = fromObs(file, colname)
         if (inputype == 'simu'):
@@ -123,7 +124,7 @@ if __name__ == "__main__":
         continuum_w = []
         continuum_f = []
         for k in knots:
-            print 'continuum : ', k[0], ' to ', k[1]
+            print('continuum : ', k[0], ' to ', k[1])
             continuum_w.extend(data[:, 0][(data[:, 0] >= k[0]) & (data[:, 0] <= k[1])])
             continuum_f.extend(data[:, 1][(data[:, 0] >= k[0]) & (data[:, 0] <= k[1])])
 
@@ -131,13 +132,13 @@ if __name__ == "__main__":
             continue
 
         for i, j in zip(continuum_w, continuum_f):
-            print i, j
+            print(i, j)
 
         fit, sfit = optimization.curve_fit(func, continuum_w, continuum_f)
 
         coef = fit[0]
         cst = fit[1]
-        print 'fitted coef = ', coef, ' cst = ', cst
+        print('fitted coef = ', coef, ' cst = ', cst)
 
         wght = np.linspace(300, 1050, 400)
         molscat = func(wght, coef, cst)
@@ -150,9 +151,9 @@ if __name__ == "__main__":
             pl.legend()
             pl.show()
 
-    print outlist
+    print(outlist)
     names = ['object', 'jd', 'airmass', 'parallactic', 'ew_w', 'ew_f']
     tb.DumpTuple(names,
                  zip(*outlist),
                  outfile)
-    print 'writing : ', outfile
+    print('writing : ', outfile)

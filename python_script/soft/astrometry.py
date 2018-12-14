@@ -6,6 +6,7 @@ http://docs.astropy.org/en/stable/wcs/
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 #from __future__ import division, print_function
 
 import os
@@ -76,10 +77,10 @@ def buildTargetCoords(references):
 
 
 def sexa2deg(ra, dec):
-    print 'was ra, dec : ', ra, dec
+    print('was ra, dec : ', ra, dec)
     ra = Angle(ra, unit='hourangle').degree
     dec = Angle(dec, unit=u.deg).degree
-    print 'is in degree :', ra, dec
+    print('is in degree :', ra, dec)
 
     return ra, dec
 
@@ -123,14 +124,14 @@ if __name__ == "__main__":
     exptime = 0
 
     targets = buildTargetCoords(references)
-    print targets
+    print(targets)
 
     '''Searching for matches'''
     for item, rep in enumerate(reps):
         file = os.path.join(rep, 'se.list')
         img = os.path.join(rep, 'calibrated.fits')
-        print 'reading : ', file
-        print 'opening img : ', img
+        print('reading : ', file)
+        print('opening img : ', img)
         dict, objects, names = tb.readcat(file)
 
         if extern:
@@ -150,7 +151,7 @@ if __name__ == "__main__":
         '''Maybe match keyword name and reference name...unreliable'''
         head = (fits.open(img))[0].header
         obj = head.get('OBJECT')
-        print 'OBJECT keyword : ', obj
+        print('OBJECT keyword : ', obj)
 
         '''Convert sources coordinates from pixel to sky ra-dec'''
         w = wcs.WCS(hdulist[0].header)
@@ -184,18 +185,18 @@ if __name__ == "__main__":
                or (world[0][1] < 0) or (world[0][1] > 2000)
                or (np.isnan(world[0][0]) == True) or (np.isnan(world[0][1]) == True)):
                 continue
-            print 'Continue only if is on focal plan'
-            print 'Obj : ', looking, looking_ra, looking_dec
-            print 'Is expected at pixels : ', world[0][0], world[0][1]
+            print('Continue only if is on focal plan')
+            print('Obj : ', looking, looking_ra, looking_dec)
+            print('Is expected at pixels : ', world[0][0], world[0][1])
 
             '''look for the closest object '''
             c = FK5(Angle(looking_ra, u.degree), Angle(looking_dec, u.degree))
             idx, d2d, d3d = match_coordinates_sky(c, catalog)
-            print idx, ' distance ~ ', (d2d.degree)[0]*3600 / 0.8,  #mode rebin 2*2
-            print ' object is at number : ', sources_nb[idx]
+            print(idx, ' distance ~ ', (d2d.degree)[0]*3600 / 0.8, end=' ')  #mode rebin 2*2
+            print(' object is at number : ', sources_nb[idx])
 
             found = objects[objects.field('NUMBER') == sources_nb[idx]]
-            print 'Found : ', found, ' => ', found.field('X_IMAGE'), found.field('Y_IMAGE')
+            print('Found : ', found, ' => ', found.field('X_IMAGE'), found.field('Y_IMAGE'))
 
             pixcrd = np.array([[found.field('X_IMAGE')[0], found.field('Y_IMAGE')[0]]], np.float_)
             world = w.wcs_pix2world(pixcrd, 1)
@@ -207,7 +208,7 @@ if __name__ == "__main__":
             if item == 0:
                 columns = ('name', 'date', 'exptime', 'band', 'ra', 'dec', 'airmass',
                            'outhum', 'outpress', 'wndspeed') + found.dtype.names
-                print 'output entries : ', columns
+                print('output entries : ', columns)
 
-    print 'writing ', outcat
+    print('writing ', outcat)
     tb.DumpTuple(columns, zip(*data), outcat)

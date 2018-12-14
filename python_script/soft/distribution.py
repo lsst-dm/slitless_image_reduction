@@ -5,6 +5,7 @@ return r realization of the parameter param foolowing the observed distribution
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -69,13 +70,13 @@ if __name__ == "__main__":
     if param == 'CLOUDS': # 10 years dataset
         prefix = 'TAUTOT'
 
-    print 'reading ', prefix+'_distrib.list'
+    print('reading ', prefix+'_distrib.list')
     values, names = readcat(prefix+'_distrib.list')
     x = values.field('bin')
     y = values.field('value')
     val = np.random.choice(x, number, p=y)
 
-    print param, val
+    print(param, val)
 
     if plot:
         pl.bar(x, y, color='blue')

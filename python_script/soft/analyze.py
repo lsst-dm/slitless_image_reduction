@@ -5,6 +5,7 @@ return wght calibrated spectrum + forward model + EW measurements
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -144,7 +145,7 @@ def Fit(model_file, obs_file, plot):
     degree = 2
     if (len(Lm) <= degree):
         degree = int(len(Lm)-1)
-        print "Changed degree to : ", degree
+        print("Changed degree to : ", degree)
 
     fit_coef = np.polyfit(Lo, Lm, deg=degree)
     points = np.linspace(100, 1500, 100)
@@ -157,7 +158,7 @@ def Fit(model_file, obs_file, plot):
         pl.axhline(y=0., linewidth=1, color='k')
         pl.xlabel('template')
         pl.ylabel('residuals')
-    print 'rms residuals = ', np.std(Lm-dispersion)
+    print('rms residuals = ', np.std(Lm-dispersion))
     return fit_coef, Lm
 
 
@@ -189,7 +190,7 @@ def EW(wavelength, flux, positions, sigmas):
         bkgd = np.polyval(linear_coef, cut[:, 0])
         segment.append([cut[:, 0], bkgd])
         equ_w = np.trapz(1 - cut[:, 1] / bkgd)
-        print 'pos, width, EW : ', i, 2*j, equ_w
+        print('pos, width, EW : ', i, 2*j, equ_w)
         ew.append(equ_w)
     return ew, segment
 
@@ -300,12 +301,12 @@ if __name__ == "__main__":
 
         ''' determine telescope filter set up'''
         filters = keys.get('FILTERS')
-        print filters
+        print(filters)
         if (str(filters).find('RG715') >= 0):
-            print 'RG715 filter in place'
+            print('RG715 filter in place')
             tel_t = 'rg715'
         else:
-            print 'Telescope set up open'
+            print('Telescope set up open')
             tel_t = 'open'
 
         '''Select the best flux estimator'''

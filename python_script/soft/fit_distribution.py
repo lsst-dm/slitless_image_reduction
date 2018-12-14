@@ -5,6 +5,7 @@ fit a distribution, either Rayleigh or double gauss
 Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
+from __future__ import print_function
 
 import os
 import sys
@@ -65,7 +66,7 @@ if __name__ == "__main__":
     method = args.distrib
     MIN = args.min
     MAX = args.max
-    print MIN, MAX
+    print(MIN, MAX)
     [hour, jd, value] = tb.readtxt(file1, ['entry', 'jd', 'value'])
     base = 24. # if sampling is hourly
 
@@ -87,7 +88,7 @@ if __name__ == "__main__":
     center = bin_width/2.
     x = bins[0:-1]+center
 
-    print 'histogram integral = ', sum(n)*bin_width
+    print('histogram integral = ', sum(n)*bin_width)
 
     if method == 'R':
         amplitude = 1.
@@ -97,8 +98,8 @@ if __name__ == "__main__":
                                       p0=p0)
         amplitude = coeff[0]
         sigma = coeff[1]
-        print "A*x*np.exp(-(x)**2/(2.*sigma**2)) / sigma**2"
-        print "A, sigma = ", coeff
+        print("A*x*np.exp(-(x)**2/(2.*sigma**2)) / sigma**2")
+        print("A, sigma = ", coeff)
         fit = rayleigh(x, *coeff)
         distrib = "Rayleigh"
         pl.text(10, 0.1,
@@ -110,7 +111,7 @@ if __name__ == "__main__":
             models.Gaussian1D(amplitude=1, mean=290, stddev=10.)
         fitter = fitting.SLSQPLSQFitter()
         gg_fit = fitter(gg_init, x, n)
-        print gg_fit
+        print(gg_fit)
         fit = gg_fit(x)
         distrib = "Two gaussian"
         pl.text(220, 0.02,
@@ -127,4 +128,4 @@ if __name__ == "__main__":
     tb.DumpTuple(names,
                  [x, nTO3_distrib.list*bin_width],
                  outname+'.list')
-    print 'writing : ', outname+'.list'
+    print('writing : ', outname+'.list')

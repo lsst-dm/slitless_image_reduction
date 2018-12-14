@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 
+from __future__ import print_function
 import os
 import sys
 import optparse
@@ -57,7 +58,7 @@ maskim = ps1.Mask()
 maskim = np.round(maskim)
 image[maskim == 0] = 0.0
 #image[maskim == 0] = np.nan
-print np.nanmin(image), np.nanmedian(image), np.nanmax(image)
+print(np.nanmin(image), np.nanmedian(image), np.nanmax(image))
 
 x0 = opts.x0
 y0 = opts.y0
@@ -66,12 +67,12 @@ xerr = opts.xerr
 yerr = opts.yerr
 famp = opts.famp
 
-print 'fwhm', fwhm
+print('fwhm', fwhm)
 
 x0index = int(np.round(x0))
 y0index = int(np.round(y0))
 fwhmindex = int(fwhm)
-print 'fwhm', fwhmindex
+print('fwhm', fwhmindex)
 xerrindex = int(np.round(xerr))
 yerrindex = int(np.round(yerr))
 
@@ -124,8 +125,8 @@ index2 = np.where(np.abs(ystar-y0) < yerr)[0]
 index = np.intersect1d(index1, index2)
 
 if len(index) == 0:
-    print len(xstar), len(index)
-    print "No stars found..."
+    print(len(xstar), len(index))
+    print("No stars found...")
     exit(0)
 
 xstar = xstar[index]
