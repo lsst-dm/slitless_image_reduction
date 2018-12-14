@@ -233,9 +233,9 @@ class spectrum(object):
 
         return
 
-    def DumpSpectrum(self, head, names, list, file):
-        list = list(zip(*list))
-        info = np.rec.fromrecords([i for i in list], names=names)
+    def DumpSpectrum(self, head, names, inputList, file):
+        inputList = list(zip(*inputList))
+        info = np.rec.fromrecords([i for i in inputList], names=names)
 
         info = info.view(NTuple)
         if (self.filters.find('RONCHI400') >= 0):
