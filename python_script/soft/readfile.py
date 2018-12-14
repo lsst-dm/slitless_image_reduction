@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 '''
 read and parse files with :
 @ keys
@@ -12,34 +12,35 @@ https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.recarray.html
 
 '''
 
-import os, sys, re
+import os
+import sys
+import re
 import numpy as np
 import pylab as pl
 
 
 def readlist(cat):
-    objs = [];   columns = []
+    objs = []
+    columns = []
     dict = {}
-    fp = open( cat, "r")
+    fp = open(cat, "r")
     lines = fp.readlines()
-    for line in lines :
-        if len(line.strip()) != 0 :
-            if (line[0]=='#'):
-                if (line[0:4] != "#end") :
-                    column = re.sub('#|:|\\n','', line)
+    for line in lines:
+        if len(line.strip()) != 0:
+            if (line[0] == '#'):
+                if (line[0:4] != "#end"):
+                    column = re.sub('#|:|\\n', '', line)
                     columns.append(column)
                 continue
-            if line[0] == "@" :
+            if line[0] == "@":
                 words = line[1:].split()
                 dict[words[0]] = words[1:]
                 continue
-            else :
-                objs.append(line.split())     
+            else:
+                objs.append(line.split())
     fp.close()
-    info  = np.rec.fromrecords(np.array(objs, dtype=float), names = columns)
+    info = np.rec.fromrecords(np.array(objs, dtype=float), names=columns)
     return dict, info
-
-
 
 
 if __name__ == "__main__":
@@ -52,7 +53,7 @@ if __name__ == "__main__":
             #print 'values : ', dict.values()
             #print 'keys : ', dict.keys()
             #print values.field('wg')
-            print 'Dict : ' ,dict.items()
+            print 'Dict : ', dict.items()
             print 'Array : ', values.field
             pl.plot(values.field('wg'), values.field('tatmo'))
             pl.show()

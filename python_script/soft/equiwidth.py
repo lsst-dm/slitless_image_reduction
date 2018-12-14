@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 '''
 give a raw fitsimage, position of object in it,
 -> return a spectrum
@@ -7,7 +7,9 @@ Author: Augustin Guyonnet
 guyonnet@lpnhe.in2p3.fr
 '''
 
-import os, sys, re
+import os
+import sys
+import re
 import subprocess
 import telinst as instru
 import numpy as np
@@ -23,10 +25,10 @@ if __name__ == "__main__":
 
     spectra = sys.argv[1:]
     total = []
-    air   = []
-    fig   = pl.figure(1)
-    for spectrum in spectra :
-        [ wgth,flux], keys  = tb.readlist(spectrum, ['pixel', 'flux'])
+    air = []
+    fig = pl.figure(1)
+    for spectrum in spectra:
+        [wgth, flux], keys = tb.readlist(spectrum, ['pixel', 'flux'])
         airmass = keys['AIRMASS']
         air.append(airmass)
         total.append(sum(flux))
@@ -40,14 +42,11 @@ if __name__ == "__main__":
         pl.legend()
     fig.savefig("resp.pdf")
 
-    
     fig = pl.figure(2)
     pl.plot(air, total, 'r^')
-    
+
     pl.show()
     pl.clf()
-
-
 
     sed = tb.SED(SED)
     fig = pl.figure(2)
@@ -56,28 +55,22 @@ if __name__ == "__main__":
     pl.legend()
     fig.savefig("sed.pdf")
 
-    
-    data    = np.recfromtxt(atmosphere)
+    data = np.recfromtxt(atmosphere)
     fig = pl.figure(0)
-    pl.plot(data[:,0], data[:,1], color='black')
+    pl.plot(data[:, 0], data[:, 1], color='black')
     pl.title('atmospheric transmission')
     pl.legend()
     fig.savefig("atmo.pdf")
-
 
     #blur the model
     #atmo[:,1] = filt.gaussian_filter1d(atmo[:,1],sigma=5.8/2.355) #5.8/2.355 is the correct sigma for this instrument/night (and for all of our data)
     #interpolate onto our spectral grid
     #atmointerp = interp.griddata(atmo[:,0],atmo[:,1],s.wavelengths)
-    
-    
-    atmo     = interp.griddata(data[:,0], data[:,1], sed.wavelength)
+
+    atmo = interp.griddata(data[:, 0], data[:, 1], sed.wavelength)
     sed.flux = sed.flux * atmo
 
-  
-
     sed.flux = interp.griddata(sed.wavelength, sed.flux, wgth)
-    trans   = flux/sed.flux
-    
+    trans = flux/sed.flux
+
     fig = pl.figure(1)
-  

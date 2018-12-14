@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 '''
 grep keywords from header of a fits image
 
@@ -6,7 +6,8 @@ Author: Augustin Guyonnet
 aguyonnet@fas.harvard.edu
 '''
 
-import os, sys
+import os
+import sys
 import astropy.io.fits as pf
 import glob
 
@@ -14,8 +15,8 @@ import glob
 def getheader(filename, keys=[]):
     extension = 0
     if (filename.find("[") > -1):
-        extension = int(filename.split('[')[1].replace("]",""))
-        filename  = filename.split('[')[0]
+        extension = int(filename.split('[')[1].replace("]", ""))
+        filename = filename.split('[')[0]
 
     try:
         f = pf.open(filename)
@@ -25,27 +26,26 @@ def getheader(filename, keys=[]):
     if not keys:
         print(repr(head))
     else:
-        print filename , [head.get(k) for k in keys]
-        
-   
-    
+        print filename, [head.get(k) for k in keys]
+
+
 if __name__ == "__main__":
     narg = len(sys.argv)
-    if narg<2 :
+    if narg < 2:
         print "header.py [fitsimage(s)] -k [keyword(s)]"
         print "If keyword is none, print whole header"
         print
     keywords = []
-    Images   = []
+    Images = []
     k = 1
-    while( k<narg ):
-        if( sys.argv[k][0] != "-" ):
-            Images.append( sys.argv[k] )
+    while(k < narg):
+        if(sys.argv[k][0] != "-"):
+            Images.append(sys.argv[k])
             k += 1
-        elif( sys.argv[k] == "-k" ):
+        elif(sys.argv[k] == "-k"):
             k += 1
-            keywords=sys.argv[k:] 
+            keywords = sys.argv[k:]
             break
- 
-    for img in Images :
-        getheader(img , keys = keywords)
+
+    for img in Images:
+        getheader(img, keys=keywords)
