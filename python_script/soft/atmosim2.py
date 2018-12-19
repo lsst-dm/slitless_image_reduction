@@ -6,24 +6,26 @@
 # With a pure absorbing atmosphere
 # Here we vary PWV
 #################################################################
+from __future__ import print_function
+from builtins import str
 import os
 import re
 import math
 import numpy as np
-import sys,getopt
-from subprocess import Popen,PIPE, STDOUT, call
+import sys
+import getopt
+from subprocess import Popen, PIPE, STDOUT, call
 
 # LibRadTran installation directory
 libradtranpath = os.getenv('LIBRADTRANDIR')+'/'
 
 
-ZXX           = 'z'    # XX index for airmass z :   XX=int(10*z)
-WVXX          = 'wv'   # XX index for PWV       :   XX=int(pwv*10)
-OZXX          = 'oz'   # XX index for OZ        :   XX=int(oz/10)
-LSST_Altitude = 2.241  # in k meters 
-OBS_Altitude  = str(LSST_Altitude)
-TOPDIR        = '/Users/augustinguyonnet/harvard/atmo_simu'
-
+ZXX = 'z'    # XX index for airmass z :   XX=int(10*z)
+WVXX = 'wv'   # XX index for PWV       :   XX=int(pwv*10)
+OZXX = 'oz'   # XX index for OZ        :   XX=int(oz/10)
+LSST_Altitude = 2.241  # in k meters
+OBS_Altitude = str(LSST_Altitude)
+TOPDIR = '/Users/augustinguyonnet/harvard/atmo_simu'
 
 
 ############################################################################
@@ -35,17 +37,15 @@ def ensure_dir(f):
 
 
 def usage():
-    print "*******************************************************************"
-    print sys.argv[0],' -z <airmass> -w <pwv> -o <oz>'
-    print 'Number of arguments:', len(sys.argv), 'arguments.'
-    print 'Argument List:', str(sys.argv)
-    print "*******************************************************************"
-    
-    
+    print("*******************************************************************")
+    print(sys.argv[0], ' -z <airmass> -w <pwv> -o <oz>')
+    print('Number of arguments:', len(sys.argv), 'arguments.')
+    print('Argument List:', str(sys.argv))
+    print("*******************************************************************")
 
 
-def model(model = 'baseline', **kwargs):
-    if (model =="baseline"):
+def model(model='baseline', **kwargs):
+    if (model == "baseline"):
         params = "atmosphere_file  %s\n\
         data_files_path /Users/augustinguyonnet/harvard/soft/libRadtran-2.0.1/data\n\
         source solar %s\n\
@@ -66,9 +66,9 @@ def model(model = 'baseline', **kwargs):
                    str(sza),
                    pwv_str,
                    oz_str)
-        params += "\naerosol_angstrom %s 0.0 "    %(str(0.0))
-        
-    if (model =="best"):
+        params += "\naerosol_angstrom %s 0.0 " % (str(0.0))
+
+    if (model == "best"):
         params = "atmosphere_file  %s\n\
 data_files_path /Users/augustinguyonnet/harvard/soft/libRadtran-2.0.1/data\n\
 source solar %s\n\
@@ -86,10 +86,8 @@ output_user lambda edir \n\
 quiet " % (libradtranpath+'data/atmmod/afglus.dat',
            libradtranpath+'data/solar_flux/kurudz_1.0nm.dat',
            str(sza))
-       
 
-
-    if (model =="none"):
+    if (model == "none"):
         params = "atmosphere_file  %s\n\
 data_files_path /Users/augustinguyonnet/harvard/soft/libRadtran-2.0.1/data\n\
 source solar %s\n\
@@ -106,21 +104,20 @@ output_user lambda edir \n\
 quiet " % (libradtranpath+'data/atmmod/afglus.dat',
            libradtranpath+'data/solar_flux/kurudz_1.0nm.dat',
            str(sza))
-       
+
     return params
 
-        
-    
+
 def main(argv):
-    airmass_str=""
-    pwv_str=""
-    oz_str=""
+    airmass_str = ""
+    pwv_str = ""
+    oz_str = ""
     try:
-        opts, args = getopt.getopt(argv,"hz:w:o:",["am=","pwv=","oz="])
+        opts, args = getopt.getopt(argv, "hz:w:o:", ["am=", "pwv=", "oz="])
     except getopt.GetoptError:
-        print 'test.py -z <airmass> -w <pwv> -o <oz>'
+        print('test.py -z <airmass> -w <pwv> -o <oz>')
         sys.exit(2)
-        
+
     for opt, arg in opts:
         if opt == '-h':
             usage()
@@ -130,91 +127,80 @@ def main(argv):
         elif opt in ("-w", "--pwv"):
             pwv_str = arg
         elif opt in ("-o", "--oz"):
-            oz_str = arg   
-         
-  
-    if airmass_str=="":
+            oz_str = arg
+
+    if airmass_str == "":
         usage()
         sys.exit()
 
-    if pwv_str=="":
+    if pwv_str == "":
         usage()
         sys.exit()
 
-    if oz_str=="":
+    if oz_str == "":
         usage()
         sys.exit()
-	
 
-    return float(airmass_str),float(pwv_str),float(oz_str)	
- 
+    return float(airmass_str), float(pwv_str), float(oz_str)
+
+
 #-----------------------------------------------------------------------------
 if __name__ == "__main__":
 
-    airmass_num,pwv_num,oz_num=main(sys.argv[1:])
-    
-    
-    print '--------------------------------------------'
-    print ' 2) airmass = ', airmass_num
-    print ' 2) pwv = ', pwv_num
-    print ' 2) oz = ', oz_num
-    print '--------------------------------------------'    
-   
- 
-    # manage input and output directories 
-    TOPDIR2=TOPDIR
+    airmass_num, pwv_num, oz_num = main(sys.argv[1:])
+
+    print('--------------------------------------------')
+    print(' 2) airmass = ', airmass_num)
+    print(' 2) pwv = ', pwv_num)
+    print(' 2) oz = ', oz_num)
+    print('--------------------------------------------')
+
+    # manage input and output directories
+    TOPDIR2 = TOPDIR
     ensure_dir(TOPDIR2)
-    INPUTDIR=TOPDIR2+'/'+'in'
+    INPUTDIR = TOPDIR2+'/'+'in'
     ensure_dir(INPUTDIR)
-    OUTPUTDIR=TOPDIR2+'/'+'out'
+    OUTPUTDIR = TOPDIR2+'/'+'out'
     ensure_dir(OUTPUTDIR)
 
-    #water vapor   
-    pwv_val=pwv_num
-    pwv_str=str(pwv_val)
-    wvfileindex=int(100*pwv_val)
-
+    #water vapor
+    pwv_val = pwv_num
+    pwv_str = str(pwv_val)
+    wvfileindex = int(100*pwv_val)
 
     # airmass
-    airmass=airmass_num
-    amfileindex=int(airmass_num*1000)
+    airmass = airmass_num
+    amfileindex = int(airmass_num*1000)
 
-    # Ozone    
-    oz_val=oz_num
-    oz_str=str(oz_num)
-    ozfileindex=int(oz_num/10.)
+    # Ozone
+    oz_val = oz_num
+    oz_str = str(oz_num)
+    ozfileindex = int(oz_num/10.)
 
-
-    # Convert airmass into zenith angle 
-    sza=math.acos(1./airmass)*180./math.pi
+    # Convert airmass into zenith angle
+    sza = math.acos(1./airmass)*180./math.pi
 
     params = model(model='best')
-    print params
+    print(params)
 
+    BaseFilename = 'RT_LS_pp_tp_sa_rt_z'+str(amfileindex)\
+        + '_'+WVXX+str(wvfileindex)\
+        + '_'+OZXX+str(ozfileindex)
 
-
-    BaseFilename='RT_LS_pp_tp_sa_rt_z'+str(amfileindex)\
-                  +'_'+WVXX+str(wvfileindex)\
-                  +'_'+OZXX+str(ozfileindex)                   
-
-    inp=os.path.join(INPUTDIR,  BaseFilename+'.INP')
-    with open(inp,'w') as f:
+    inp = os.path.join(INPUTDIR, BaseFilename+'.INP')
+    with open(inp, 'w') as f:
         f.write(params)
 
-    
-    
-    out=os.path.join(OUTPUTDIR, BaseFilename+'.OUT')
+    out = os.path.join(OUTPUTDIR, BaseFilename+'.OUT')
 
     verbose = True
     if verbose:
-        print("Running uvspec with input file: ", inp)
-        print("Output to file                : ", out)
- 
-    cmd = libradtranpath+'bin/uvspec '+  ' < ' + inp  +  ' > ' + out
-    
-    if verbose:
-        print("uvspec cmd: ", cmd)
-    p   = Popen(cmd,shell=True,stdout=PIPE)
-    p.wait()
-  
+        print(("Running uvspec with input file: ", inp))
+        print(("Output to file                : ", out))
 
+    cmd = libradtranpath+'bin/uvspec ' + ' < ' + inp + ' > ' + out
+
+    if verbose:
+        print(("uvspec cmd: ", cmd))
+    p = Popen(cmd, shell=True, stdout=PIPE)
+    p.wait()

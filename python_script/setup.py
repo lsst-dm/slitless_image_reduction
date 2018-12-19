@@ -30,18 +30,18 @@
 
 from distutils.core import setup, Extension
 
-setup (name = 'decam_lsst',
-       version = '0.0',
-       description = 'Decam software',
-       author = [ "Augustin Guyonnet", 
-                ],
-       author_email = "guyonnet@lpnhe.in2p3.fr",
-       #scripts = ['get_ROnoise.py'
-       #           ],
-       packages = ['lsst.utils'],#['decam.utils', 'lsst.utils']
-       ext_modules = [],
-       data_files=[]#('merope-reduction/data', ['data/merope-events.rdb'])]
-       )
+setup(name='decam_lsst',
+      version='0.0',
+      description='Decam software',
+      author=["Augustin Guyonnet",
+              ],
+      author_email="guyonnet@lpnhe.in2p3.fr",
+      #scripts = ['get_ROnoise.py'
+      #           ],
+      packages=['lsst.utils'],#['decam.utils', 'lsst.utils']
+      ext_modules=[],
+      data_files=[]#('merope-reduction/data', ['data/merope-events.rdb'])]
+      )
 
 
 # ======================================================================
