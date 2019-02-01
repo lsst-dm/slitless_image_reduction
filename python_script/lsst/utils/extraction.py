@@ -50,7 +50,7 @@ def MoffatFit(pixels, projected_footprint, A, mu, sigma, residuals, i, plot):
     end = psf.x_0 + 5 * psf.gamma
     integral = (integrate.quad(lambda pixels: psf(pixels), start, end))[0]
     ''' begin Control plot'''
-    if((not i % 10)and(i < 400) and (plot == True)):
+    if((not i % 10) and (i < 400) and (plot == True)):
         pl.plot(pixels, psf(pixels), label='Moffat')
         pl.yscale('log')
         pl.ylim(1., 1E6)
@@ -169,21 +169,19 @@ class extract(object):
 
     def flux(self, mode='aperture', **kwargs):
         bkgd_size = 10
-        pixel = []
-        aper_flux = []
         width = len(self.footprint)
 
-        ysize = width - 2*bkgd_size
-        xsize = self.length
+        ysize = width - 2*bkgd_size  # 20
+        xsize = self.length  # 700
         residuals = np.zeros([ysize, xsize])
 
         if((mode == 'psf') or (mode == 'both')):
             sigma = 3.
-            mu = width/2.
+            mu = width/2.  # 20
             amplitude = 1000.
 
-        for i in range(self.length):
-            self.pixel[i] = i
+        for i in range(self.length):  # take row slices
+            self.pixel[i] = i  # pointless, right?
             projected_footprint = subtractBkgd(self.footprint[:, i], width, bkgd_size)
 
             if((mode == 'aperture') or (mode == 'both')):
@@ -206,12 +204,12 @@ class extract(object):
                     amplitude = coeff[0]
                     perr = np.sqrt(np.diag(var_matrix))
                     self.psf_gauss_flux[i] = np.sqrt(
-                        2 * np.pi) * self.psf_gauss_sigma[i] * amplitude # Gaussian integral
-                    mu = coeff[1]   #starting value for next fit
-                    sigma = coeff[2]   #starting value for next fit
+                        2 * np.pi) * self.psf_gauss_sigma[i] * amplitude  # Gaussian integral
+                    mu = coeff[1]   # starting value for next fit
+                    sigma = coeff[2]   # starting value for next fit
 
                     '''Fitting a Moffat profile'''
-                    #if((not i % 10) and (i<400) and (amplitude >=100)):
+                    # if((not i % 10) and (i<400) and (amplitude >=100)):
                     self.psf_moffat_flux[i],\
                         self.psf_moffat_x0[i],\
                         self.psf_moffat_gamma[i],\
@@ -235,14 +233,14 @@ class extract(object):
 
                 '''Filling in the residuals'''
                 fit = Gauss1D(pixels, *coeff)
-                #residuals[:, i] = fit-projected_footprint #currently at Moffat
+                # residuals[:, i] = fit-projected_footprint #currently at Moffat
 
                 ''' begin Control plot'''
-                if(self.plot == True):
-                    if((not i % 10)and(i < 400)):
+                if(self.plot):
+                    if((not i % 10) and (i < 400)):
                         print('aper : ', i, self.aper_flux[i])
                         print(i, self.psf_gauss_flux[i], self.psf_gauss_sigma[i], self.psf_gauss_mu[i], amplitude)
-                        #fit = Gauss1D(pixels, *coeff)
+                        # fit = Gauss1D(pixels, *coeff)
                         pl.xlabel('Spectrum spatial profile (pixel)')
                         pl.ylabel('Amplitude (ADU)')
                         pl.title('CTIO .9m - %s'%(self.spectrum.object_name))
